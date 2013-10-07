@@ -75,6 +75,7 @@ int main()
 		luaScript.Initialize();
 
 		luaScript.CallLuaMethod<void>("EventHandler", "TriggerEvent", "GameStart");
+		luaScript.CallLuaFunction<int>("Run");
 	}
 	catch(std::exception& e){
 		cout << endl << e.what() << endl;
@@ -84,6 +85,67 @@ int main()
 	
 	return 0;
 }
+```
+
+```
+--demo.lua
+print("\nStarting demo.lua")
+
+--Demo event handler
+
+EventHandler = {}
+EventHandler.CreateEvent = {}
+function EventHandler.TriggerEvent(str_event)
+	if EventHandler[str_event] ~= nil then
+		for i, v in ipairs(EventHandler[str_event]) do
+			v()
+		end
+	else
+		trace("No event handlers for \"" .. str_event .. "\"")
+	end
+end
+
+function EventHandler.Register(events)
+	for eventName, fn in pairs(events) do
+		if EventHandler[eventName] == nil then
+			EventHandler[eventName] = {}
+		end
+		table.insert(EventHandler[eventName], fn)
+	end	
+end
+
+--Add event listener
+
+MyEventListener = {}
+function MyEventListener.GameStart()
+	print("Game started")
+end
+
+EventHandler.Register(MyEventListener)
+
+--Inherit from registered C++ class
+
+BasicAccount = Account.inherit()
+
+--Add fields to C++ class (we could add this to BasicAccount too, just showing we can extend C++ classes
+function Account:show()
+	print("Balance of this account is " .. self.Balance:get())
+end
+
+--Constructor for our new class
+function BasicAccount:new(val)
+	newObj = Account.new(val)	
+	self.__index = self;
+	return setmetatable(newObj, self)
+end
+
+--Runs a small demo
+function Run()
+	b = BasicAccount:new(200)
+	b:Deposit(30)
+	b:show()
+	print(b)
+end
 ```
 
 Have fun exploring this library and I hope it will prove useful in your projects.
