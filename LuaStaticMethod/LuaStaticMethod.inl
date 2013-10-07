@@ -1,3 +1,20 @@
+// Copyright © 2013 Tom Tondeur
+// 
+// This file is part of LuaLink.
+// 
+// LuaLink is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// LuaLink is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Lesser General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with LuaLink.  If not, see <http://www.gnu.org/licenses/>.
+
 #pragma once
 
 namespace LuaLink
@@ -110,9 +127,11 @@ namespace LuaLink
 	template<typename ClassT>
 	int LuaStaticMethod<ClassT>::OverloadedCTorDispatch(lua_State* L)
 	{
+		//Get locations of valid constructors in our lookup table
 		unsigned int startIdx = lua_tounsigned( L, lua_upvalueindex(1) );
 		unsigned int endIdx =	lua_tounsigned( L, lua_upvalueindex(2) );
 
+		//Try constructors until we find one that fits (in case of failure, they will return before allocating any memory)
 		for(unsigned int i = startIdx; i < endIdx; ++i){
 			int ret = s_OverloadedConstructorWrapper(L, LuaFunction::s_LuaFunctionTable[i].pWrapper, LuaFunction::s_LuaFunctionTable[i].pFunc, LuaFunction::OverloadedErrorHandling);
 		
@@ -121,6 +140,7 @@ namespace LuaLink
 
 			return ret;
 		}
-		return luaL_error(L, "Invalid function call");
+		//No valid overload has been found
+		return luaL_error(L, "Unable to match a constructor with the provided input signature.");
 	}
 }
