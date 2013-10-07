@@ -1,0 +1,79 @@
+#pragma once
+
+template<typename T> class LuaLink::LuaClass;
+
+namespace LuaLink
+{
+	template<typename ClassT>
+	struct LuaMethod
+	{	
+		template<typename MemberFunctionType>
+		// // Add a C++ member function to the Lua environment
+		static void Register(MemberFunctionType pFunc, const std::string& name);
+
+	private:
+		friend class LuaClass<ClassT>; //LuaClass<ClassT> needs access to Commit, rather befriend LuaClass<ClassT> than expose Commit to everything
+	
+		typedef void(ClassT::*Unsafe_MethodType)();
+		typedef int(*WrapperDoubleArg)(lua_State*, Unsafe_MethodType, LuaFunction::ArgErrorCbType);	
+		typedef int(*WrapperSingleArg)(lua_State*);
+	
+		//Struct form of wrapper/callbacks, necessary to keep a lookup table of all wrappers/callbacks
+		struct Unsafe_MethodWrapper;
+	
+		//Contains all registered member functions, is flushed after functions are pushed to Lua environment
+		static std::map<std::string, std::vector<Unsafe_MethodWrapper> > s_LuaFunctionMap;
+
+		//* Contains all registered member functions
+		//* Is filled when functions are pushed to Lua environment
+		//* Used to retrieve callbacks on Lua function calls
+		static std::vector<Unsafe_MethodWrapper> s_LuaFunctionTable;
+	
+		template<typename _RetType, typename... _ArgTypes>
+		// // Add a C++ member function to the appropriate lookup table
+		static void Register_Impl(_RetType(ClassT::*pFunc)(_ArgTypes...), const std::string& name);
+	
+		// // Pushes all registered member functions to the Lua environment
+		static void Commit(lua_State* pLuaState, int tablePosOnStack);
+	
+		// // Retrieves the this pointer from the table on the bottom of the stack
+		static void PushThisPointer(lua_State* L);
+
+		// // Tries out all overloads until it finds an overload that matches the arguments used in the Lua call
+		static int OverloadDispatch(lua_State* L);
+		
+		// // Common code in all MethodWrappers, returns pointer to pointer to object to call member function on
+		static ClassT** GetObjectAndVerifyStackSize(lua_State* L, int nrOfArgs);
+	
+		// CALLBACK WRAPPERS
+		template<typename _RetType, typename... _ArgTypes> struct MethodWrapper;
+	
+		//TODO: Move to .inl file
+		template<>struct MethodWrapper<void>
+		{
+			static int execute(lua_State* pLuaState, Unsafe_MethodType fn, LuaFunction::ArgErrorCbType onArgError)
+			{
+				auto ppObj = GetObjectAndVerifyStackSize(pLuaState, 0);
+				if(ppObj == nullptr)
+					return onArgError(pLuaState, 0);
+
+				((*ppObj)->*(fn))();
+				return 0;
+			}
+		
+			static int execute(lua_State* pLuaState)
+			{
+				return execute(pLuaState, 
+								s_LuaFunctionTable[static_cast<unsigned int>(lua_tounsigned( pLuaState, lua_upvalueindex(1) ) )].pFunc, 
+								LuaFunction::DefaultErrorHandling);
+			}
+		};
+		
+		//Disable default constructor, destructor, copy constructor & assignment operator
+		LuaMethod(void);
+		~LuaMethod(void);
+		LuaMethod(const LuaMethod& src);
+		LuaMethod& operator=(const LuaMethod& src);
+	};
+}
+	#include "LuaMethod.inl"

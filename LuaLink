@@ -1,0 +1,14 @@
+#pragma once
+#ifndef LUALINK_H
+#define LUALINK_H
+
+#include "LuaClass\LuaClass.h"
+#include "LuaFunction\LuaFunction.h"
+#include "LuaMethod\LuaMethod.h"
+#include "LuaScript\LuaScript.h"
+#include "LuaStack\LuaStack.h"
+#include "LuaStaticMethod\LuaStaticMethod.h"
+#include "LuaVariable\LuaVariable.h"
+#include "luadbg.h"
+
+#endif // LUALINK_H
