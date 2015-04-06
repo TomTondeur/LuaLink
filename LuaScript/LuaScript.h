@@ -1,4 +1,4 @@
-// Copyright © 2013 Tom Tondeur
+// Copyright ï¿½ 2013 Tom Tondeur
 // 
 // This file is part of LuaLink.
 // 
@@ -20,6 +20,7 @@
 #include <lua.hpp>
 #include <functional>
 #include <memory>
+#include <string>
 
 #include <map>
 
@@ -50,6 +51,12 @@ namespace LuaLink
 		void Load(void(*initializeEnvironmentFn)(void) = nullptr, bool bOpenLibs = true, bool bResetState = false);
 		// // Adds all registered C++ functions and classes to the environment and performs an initial run
 		void Initialize (void);
+        
+        template<typename _RetType, typename... _ArgTypes>
+        _RetType CallFunction(const char* fnName, _ArgTypes... args);
+        
+        template<typename _RetType, typename... _ArgTypes>
+        _RetType CallMethod(const char* className, const char* fnName, _ArgTypes... args);
 
 		template<typename _RetType>
 		struct Call;

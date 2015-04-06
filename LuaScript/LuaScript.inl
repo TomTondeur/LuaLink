@@ -1,4 +1,4 @@
-// Copyright © 2013 Tom Tondeur
+// Copyright ï¿½ 2013 Tom Tondeur
 // 
 // This file is part of LuaLink.
 // 
@@ -17,39 +17,43 @@
 
 #pragma once
 
+#include <sstream>
+
 #include "../luadbg.h"
+
+#include "../LuaStack/LuaStack.h"
 
 namespace LuaLink
 {
 	//Utilities for templates
-	class TemplateUtil{
-	public:
-		template <typename... T>
-		//Count number of template parameters
-		static size_t GetNrOfArguments ()
-		{
-			return Num_Args<T...>::calculate();
-		}
-
-	private: //Implementation details
-		template <typename... T>
-		class Num_Args;
-	
-		template <typename H, typename... T>
-		struct Num_Args <H, T...>
-		{
-			static size_t calculate() {
-				return 1 + Num_Args<T...>::calculate();
-			}
-		};
-
-		template <>
-		struct Num_Args <>
-		{
-			static size_t calculate() {
-				return 0;
-			}
-		};
+    namespace TemplateUtil{
+        namespace detail {
+            template <typename... T>
+            struct Num_Args;
+            
+            template<>
+            struct Num_Args <>
+            {
+                static size_t calculate() {
+                    return 0;
+                }
+            };
+            
+            template <typename H, typename... T>
+            struct Num_Args <H, T...>
+            {
+                static size_t calculate() {
+                    return 1 + Num_Args<T...>::calculate();
+                }
+            };
+        }
+        
+        template <typename... T>
+        //Count number of template parameters
+        static size_t GetNrOfArguments ()
+        {
+            return detail::Num_Args<T...>::calculate();
+        }
 	};
 
 	#define LUA_STATE s_pLuaState.get()
@@ -72,7 +76,7 @@ namespace LuaLink
 			LuaStack::pushStack<_ArgTypes...>(LUA_STATE, arguments...);
 		
 			//Perform function call
-			if (lua_pcall(LUA_STATE, TemplateUtil::GetNrOfArguments<_ArgTypes...>(), 1, 0) != 0) 
+			if (lua_pcall(LUA_STATE, static_cast<int>(TemplateUtil::GetNrOfArguments<_ArgTypes...>()), 1, 0) != 0)
 					throw LuaCallException(lua_tostring(LUA_STATE, -1));
 		
 			//Check return value
@@ -116,7 +120,7 @@ namespace LuaLink
 			auto ret = LuaStack::getVariable<_RetType>(LUA_STATE, -1, isOk);
 			if(!isOk){
 				std::stringstream strstr;
-				strstr << "Error: Expected return type " << typeid(_RetType).name() << " does not match the value returned by " << className << "::" << functionName;
+				strstr << "Error: Expected return type " << typeid(_RetType).name() << " does not match the value returned by " << tableName << "::" << functionName;
 				throw LuaCallException(strstr.str().c_str());
 			}
 
@@ -166,10 +170,22 @@ namespace LuaLink
 			LuaStack::pushStack<_ArgTypes...>(LUA_STATE, arguments...);
 		
 			//Perform function call
-			if (lua_pcall(LUA_STATE, TemplateUtil::GetNrOfArguments<_ArgTypes...>(), 0, 0) != 0) 
+			if (lua_pcall(LUA_STATE, static_cast<int>(TemplateUtil::GetNrOfArguments<_ArgTypes...>()), 0, 0) != 0)
 					throw LuaCallException(lua_tostring(LUA_STATE, -1));
 		}
 	};
+    
+    template<typename _RetType, typename... _ArgTypes>
+    _RetType LuaScript::CallFunction(const char* fnName, _ArgTypes... args)
+    {
+        return LuaScript::Call<_RetType>::LuaFunction(fnName, args...);
+    }
+    
+    template<typename _RetType, typename... _ArgTypes>
+    _RetType LuaScript::CallMethod(const char* className, const char* fnName, _ArgTypes... args)
+    {
+        return LuaScript::Call<_RetType>::LuaStaticMethod(className, fnName, args...);
+    }
 
 	#undef LUA_STATE
 }

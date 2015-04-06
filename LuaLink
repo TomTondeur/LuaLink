@@ -1,4 +1,4 @@
-// Copyright © 2013 Tom Tondeur
+// Copyright ï¿½ 2013 Tom Tondeur
 // 
 // This file is part of LuaLink.
 // 
@@ -19,13 +19,13 @@
 #ifndef LUALINK_H
 #define LUALINK_H
 
-#include "LuaClass\LuaClass.h"
-#include "LuaFunction\LuaFunction.h"
-#include "LuaMethod\LuaMethod.h"
-#include "LuaScript\LuaScript.h"
-#include "LuaStack\LuaStack.h"
-#include "LuaStaticMethod\LuaStaticMethod.h"
-#include "LuaVariable\LuaVariable.h"
+#include "LuaClass/LuaClass.h"
+#include "LuaFunction/LuaFunction.h"
+#include "LuaMethod/LuaMethod.h"
+#include "LuaScript/LuaScript.h"
+#include "LuaStack/LuaStack.h"
+#include "LuaStaticMethod/LuaStaticMethod.h"
+#include "LuaVariable/LuaVariable.h"
 #include "luadbg.h"
 
 #endif // LUALINK_H

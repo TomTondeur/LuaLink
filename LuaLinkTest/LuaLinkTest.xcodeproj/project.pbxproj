@@ -1,0 +1,269 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7ACFDABD1AD2C31A0025BF08 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7ACFDABC1AD2C31A0025BF08 /* main.cpp */; };
+		7ACFDACA1AD2CC080025BF08 /* libLuaLink.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ACFDAC91AD2CC080025BF08 /* libLuaLink.a */; };
+		7ACFDACC1AD2CC270025BF08 /* liblua.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ACFDACB1AD2CC270025BF08 /* liblua.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		7ACFDAB71AD2C31A0025BF08 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		7ACFDAB91AD2C31A0025BF08 /* LuaLinkTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = LuaLinkTest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7ACFDABC1AD2C31A0025BF08 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		7ACFDAC91AD2CC080025BF08 /* libLuaLink.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLuaLink.a; path = "../../../Library/Developer/Xcode/DerivedData/LuaLink-dgducdobcmgjohcaajqxkczpjbpc/Build/Products/Debug/libLuaLink.a"; sourceTree = "<group>"; };
+		7ACFDACB1AD2CC270025BF08 /* liblua.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblua.a; path = ../../../../../usr/local/lib/liblua.a; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7ACFDAB61AD2C31A0025BF08 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7ACFDACC1AD2CC270025BF08 /* liblua.a in Frameworks */,
+				7ACFDACA1AD2CC080025BF08 /* libLuaLink.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7ACFDAB01AD2C31A0025BF08 = {
+			isa = PBXGroup;
+			children = (
+				7ACFDACB1AD2CC270025BF08 /* liblua.a */,
+				7ACFDAC91AD2CC080025BF08 /* libLuaLink.a */,
+				7ACFDABB1AD2C31A0025BF08 /* LuaLinkTest */,
+				7ACFDABA1AD2C31A0025BF08 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7ACFDABA1AD2C31A0025BF08 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7ACFDAB91AD2C31A0025BF08 /* LuaLinkTest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7ACFDABB1AD2C31A0025BF08 /* LuaLinkTest */ = {
+			isa = PBXGroup;
+			children = (
+				7ACFDABC1AD2C31A0025BF08 /* main.cpp */,
+			);
+			path = LuaLinkTest;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7ACFDAB81AD2C31A0025BF08 /* LuaLinkTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7ACFDAC01AD2C31A0025BF08 /* Build configuration list for PBXNativeTarget "LuaLinkTest" */;
+			buildPhases = (
+				7ACFDAB51AD2C31A0025BF08 /* Sources */,
+				7ACFDAB61AD2C31A0025BF08 /* Frameworks */,
+				7ACFDAB71AD2C31A0025BF08 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LuaLinkTest;
+			productName = LuaLinkTest;
+			productReference = 7ACFDAB91AD2C31A0025BF08 /* LuaLinkTest */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7ACFDAB11AD2C31A0025BF08 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0620;
+				ORGANIZATIONNAME = "Tom Tondeur";
+				TargetAttributes = {
+					7ACFDAB81AD2C31A0025BF08 = {
+						CreatedOnToolsVersion = 6.2;
+					};
+				};
+			};
+			buildConfigurationList = 7ACFDAB41AD2C31A0025BF08 /* Build configuration list for PBXProject "LuaLinkTest" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7ACFDAB01AD2C31A0025BF08;
+			productRefGroup = 7ACFDABA1AD2C31A0025BF08 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7ACFDAB81AD2C31A0025BF08 /* LuaLinkTest */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7ACFDAB51AD2C31A0025BF08 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7ACFDABD1AD2C31A0025BF08 /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		7ACFDABE1AD2C31A0025BF08 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = ./../;
+			};
+			name = Debug;
+		};
+		7ACFDABF1AD2C31A0025BF08 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = ./../;
+			};
+			name = Release;
+		};
+		7ACFDAC11AD2C31A0025BF08 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/local/lib/lua/5.3/src,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/LuaLink-dgducdobcmgjohcaajqxkczpjbpc/Build/Products/Debug",
+					/usr/local/lib/lua/5.3/src/,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		7ACFDAC21AD2C31A0025BF08 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/local/lib/lua/5.3/src,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/LuaLink-dgducdobcmgjohcaajqxkczpjbpc/Build/Products/Debug",
+					/usr/local/lib/lua/5.3/src/,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7ACFDAB41AD2C31A0025BF08 /* Build configuration list for PBXProject "LuaLinkTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7ACFDABE1AD2C31A0025BF08 /* Debug */,
+				7ACFDABF1AD2C31A0025BF08 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7ACFDAC01AD2C31A0025BF08 /* Build configuration list for PBXNativeTarget "LuaLinkTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7ACFDAC11AD2C31A0025BF08 /* Debug */,
+				7ACFDAC21AD2C31A0025BF08 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7ACFDAB11AD2C31A0025BF08 /* Project object */;
+}

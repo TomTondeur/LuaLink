@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>7368F0C8-2461-4941-86A0-7D8AE4A26F96</string>
+	<key>IDESourceControlProjectName</key>
+	<string>LuaLink</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>ED69446E1D64F96908790B74612B5FD96433F82D</key>
+		<string>https://github.com/TomTondeur/LuaLink.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>LuaLink.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>ED69446E1D64F96908790B74612B5FD96433F82D</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/TomTondeur/LuaLink.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>ED69446E1D64F96908790B74612B5FD96433F82D</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>ED69446E1D64F96908790B74612B5FD96433F82D</string>
+			<key>IDESourceControlWCCName</key>
+			<string>LuaLink</string>
+		</dict>
+	</array>
+</dict>
+</plist>

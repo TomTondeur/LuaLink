@@ -1,4 +1,4 @@
-// Copyright © 2013 Tom Tondeur
+// Copyright ï¿½ 2013 Tom Tondeur
 // 
 // This file is part of LuaLink.
 // 
@@ -31,21 +31,20 @@ void LuaFunction::Commit(lua_State* pLuaState)
 		}
 
 		//Copy function objects to table
-		unsigned int startIdx = s_LuaFunctionTable.size();
-		unsigned int endIdx = startIdx + elem.second.size();
+		size_t startIdx = s_LuaFunctionTable.size();
+		size_t endIdx = startIdx + elem.second.size();
 
 		std::move(elem.second.begin(), elem.second.end(), std::insert_iterator<std::vector<Unsafe_LuaFunc>>(s_LuaFunctionTable, s_LuaFunctionTable.end()));
 
 		//Push start and end indices
-		lua_pushunsigned(pLuaState, startIdx);
-		lua_pushunsigned(pLuaState, endIdx);
+		lua_pushinteger(pLuaState, (lua_Integer)startIdx);
+		lua_pushinteger(pLuaState, (lua_Integer)endIdx);
 
 		//Push closure
 		lua_pushcclosure(pLuaState, LuaFunctionDispatch, 2);
 		lua_setglobal(pLuaState, elem.first.c_str());
 	}
 	s_LuaFunctionMap.clear();
-	s_LuaFunctionMap.swap(std::map<std::string, std::vector<LuaFunction::Unsafe_LuaFunc>>());
 }
 
 // // Throws out all references to functions that are left over from previous commits
@@ -58,10 +57,10 @@ void LuaFunction::Release(void)
 // Tries out all overloads until it finds an overload that matches the arguments used in the Lua call
 int LuaFunction::LuaFunctionDispatch(lua_State* L)
 {
-	unsigned int startIdx = lua_tounsigned( L, lua_upvalueindex(1) );
-	unsigned int endIdx =	lua_tounsigned( L, lua_upvalueindex(2) );
+	auto startIdx = static_cast<lua_Unsigned>( lua_tointeger( L, lua_upvalueindex(1) ) );
+	auto endIdx =	static_cast<lua_Unsigned>( lua_tointeger( L, lua_upvalueindex(2) ) );
 
-	for(unsigned int i = startIdx; i < endIdx; ++i){
+	for(auto i = startIdx; i < endIdx; ++i){
 		int ret = s_LuaFunctionTable[i].pWrapper(L, s_LuaFunctionTable[i].pFunc, OverloadedErrorHandling);
 		if(ret < 0)
 			continue;

@@ -1,4 +1,4 @@
-// Copyright © 2013 Tom Tondeur
+// Copyright ï¿½ 2013 Tom Tondeur
 // 
 // This file is part of LuaLink.
 // 
@@ -75,13 +75,13 @@ namespace LuaLink
 	int LuaClass<T>::ConstructorWrapper(lua_State * L)
 	{
 		return ConstructorWrapper(L, 
-							static_cast<LuaFunction::WrapperDoubleArg>(LuaStack::getVariable<void*>( L, lua_upvalueindex(1) ) ), 
+							reinterpret_cast<detail::WrapperDoubleArg>(LuaStack::getVariable<void*>( L, lua_upvalueindex(1) ) ),
 							LuaStack::getVariable<void*>( L, lua_upvalueindex(2) ),
 							LuaFunction::DefaultErrorHandling);
 	}
 
 	template <typename T>
-	int LuaClass<T>::ConstructorWrapper(lua_State * L, LuaFunction::WrapperDoubleArg pWrapper, void* pFunc, LuaFunction::ArgErrorCbType onArgError)
+	int LuaClass<T>::ConstructorWrapper(lua_State * L, detail::WrapperDoubleArg pWrapper, void* pFunc, detail::ArgErrorCbType onArgError)
 	{
 		//Create new object
 		if(pWrapper(L, pFunc, onArgError) == -1)

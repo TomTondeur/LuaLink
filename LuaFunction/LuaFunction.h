@@ -1,4 +1,4 @@
-// Copyright © 2013 Tom Tondeur
+// Copyright ï¿½ 2013 Tom Tondeur
 // 
 // This file is part of LuaLink.
 // 
@@ -33,17 +33,14 @@ namespace LuaLink
 		template<typename FunctionType>
 		// // Add a C++ global function to the Lua environment
 		static void Register(FunctionType pFunc, const std::string& name);
+        
+        static int DefaultErrorHandling(lua_State* L, int narg);
 		
 	private:	
 		template<typename T> friend struct LuaStaticMethod; //LuaStaticMethod uses the same function table as LuaFunction
 		friend class LuaScript; //LuaScript needs access to Commit, rather befriend LuaScript than expose Commit to everything
 		template<typename T> friend class LuaClass;
 		template<typename T> friend struct LuaMethod;
-	
-		typedef int(*ArgErrorCbType)(lua_State*, int);
-
-		typedef int(*WrapperDoubleArg)(lua_State*, void*, ArgErrorCbType);
-		typedef int(*WrapperSingleArg)(lua_State*);
 	
 		//Struct form of wrapper/callbacks, necessary to keep a lookup table of all wrappers/callbacks
 		struct Unsafe_LuaFunc;
@@ -66,7 +63,6 @@ namespace LuaLink
 		// // Throws out all references to functions that are left over from previous commits
 		static void Release(void);
 
-		static int DefaultErrorHandling(lua_State* L, int narg);
 		static int OverloadedErrorHandling(lua_State* L, int narg);
 
 		// CALLBACK WRAPPERS
@@ -74,30 +70,22 @@ namespace LuaLink
 		// Tries out all overloads until it finds an overload that matches the arguments used in the Lua call
 		static int LuaFunctionDispatch(lua_State* L);
 
-		template<typename _RetType, typename... _ArgTypes> struct FunctionWrapper;
-	
-		//no ret, 0 arg
-		template<>struct FunctionWrapper<void>
-		{
-			typedef void(*CbType)(void);
-
-			static int execute(lua_State* pLuaState, void* fn, ArgErrorCbType onArgError)
-			{
-				if(lua_gettop(pLuaState) != 0) //argc
-					return onArgError(pLuaState, 0);
-
-				static_cast<CbType>(fn)();
-				return 0;
-			}
-
-			static int execute(lua_State* pLuaState){return execute(pLuaState, lua_touserdata( pLuaState, lua_upvalueindex(1) ), DefaultErrorHandling);}
-		};
-	
 		//Disable default constructor, destructor, copy constructor & assignment operator
 		LuaFunction(void);
 		~LuaFunction(void);
 		LuaFunction(const LuaFunction& src);
 		LuaFunction& operator=(const LuaFunction& src);
 	};
+    
+    namespace detail {
+        typedef int(*ArgErrorCbType)(lua_State*, int);
+        
+        typedef int(*WrapperDoubleArg)(lua_State*, void*, ArgErrorCbType);
+        typedef int(*WrapperSingleArg)(lua_State*);
+        
+        template<typename _RetType, typename... _ArgTypes> struct FunctionWrapper;
+    }
 }
-	#include "LuaFunction.inl"
+
+
+#include "LuaFunction.inl"

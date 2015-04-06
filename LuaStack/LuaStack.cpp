@@ -1,4 +1,4 @@
-// Copyright © 2013 Tom Tondeur
+// Copyright ï¿½ 2013 Tom Tondeur
 // 
 // This file is part of LuaLink.
 // 
@@ -46,7 +46,7 @@ template<>
 unsigned int LuaStack::getVariable<unsigned int>(lua_State* pLua, int varIdx, bool& isOk) 
 { 
 	int isnum;
-	lua_Unsigned u = lua_tounsignedx(pLua, varIdx, &isnum);
+	lua_Unsigned u = (lua_Unsigned)lua_tointegerx(pLua, varIdx, &isnum);
 	isOk = isnum != 0;
 
 	return static_cast<unsigned int>(u); 
@@ -93,15 +93,13 @@ std::string LuaStack::getVariable<std::string>(lua_State* pLua, int varIdx)
 template<>
 int LuaStack::getVariable<int>(lua_State* pLua, int varIdx) 
 {
-	lua_Integer i = lua_tointeger(pLua, varIdx);
-	return static_cast<int>(i);	
+	return static_cast<int>(lua_tointeger(pLua, varIdx));
 }
 
 template<>
 unsigned int LuaStack::getVariable<unsigned int>(lua_State* pLua, int varIdx) 
-{ 
-	lua_Unsigned u = lua_tounsigned(pLua, varIdx);
-	return static_cast<unsigned int>(u); 
+{
+	return static_cast<unsigned int>(lua_tointeger(pLua, varIdx));
 }
 
 template<>
@@ -158,7 +156,7 @@ void LuaStack::pushVariable<int>(lua_State* pLua, int data)
 template<> 
 void LuaStack::pushVariable<unsigned int>(lua_State* pLua, unsigned int data)
 { 
-	lua_pushunsigned(pLua, static_cast<lua_Unsigned>(data) );
+	lua_pushinteger(pLua, static_cast<lua_Integer>(data) );
 }
 
 template<> 

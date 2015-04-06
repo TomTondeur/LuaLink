@@ -1,4 +1,4 @@
-// Copyright © 2013 Tom Tondeur
+// Copyright ï¿½ 2013 Tom Tondeur
 // 
 // This file is part of LuaLink.
 // 
@@ -25,7 +25,8 @@ namespace LuaLink
 	struct LuaStack::Implementation_pushStack<H, T...>{
 		static void pushStack(lua_State* pLua, H data, T... tailData) 
 		{ 
-			pushVariable<H>(pLua, data); pushStack<T...>(pLua, tailData...);
+			pushVariable<H>(pLua, data);
+            pushStack(pLua, tailData...);
 		}
 	};
 

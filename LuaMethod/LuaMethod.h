@@ -1,4 +1,4 @@
-// Copyright © 2013 Tom Tondeur
+// Copyright ï¿½ 2013 Tom Tondeur
 // 
 // This file is part of LuaLink.
 // 
@@ -17,10 +17,15 @@
 
 #pragma once
 
-template<typename T> class LuaLink::LuaClass;
-
 namespace LuaLink
 {
+    template<typename T> class LuaClass;
+    
+    namespace detail {
+        // Callback wrappers
+        template<typename ClassT, typename _RetType, typename... _ArgTypes> struct MethodWrapper;
+    }
+
 	template<typename ClassT>
 	struct LuaMethod
 	{	
@@ -29,10 +34,12 @@ namespace LuaLink
 		static void Register(MemberFunctionType pFunc, const std::string& name);
 
 	private:
+        template<typename T, typename _RetType, typename... _ArgTypes>
+        friend class detail::MethodWrapper;
 		friend class LuaClass<ClassT>; //LuaClass<ClassT> needs access to Commit, rather befriend LuaClass<ClassT> than expose Commit to everything
 	
 		typedef void(ClassT::*Unsafe_MethodType)();
-		typedef int(*WrapperDoubleArg)(lua_State*, Unsafe_MethodType, LuaFunction::ArgErrorCbType);	
+		typedef int(*WrapperDoubleArg)(lua_State*, Unsafe_MethodType, detail::ArgErrorCbType);
 		typedef int(*WrapperSingleArg)(lua_State*);
 	
 		//Struct form of wrapper/callbacks, necessary to keep a lookup table of all wrappers/callbacks
@@ -62,35 +69,35 @@ namespace LuaLink
 		// // Common code in all MethodWrappers, returns pointer to pointer to object to call member function on
 		static ClassT** GetObjectAndVerifyStackSize(lua_State* L, int nrOfArgs);
 	
-		// CALLBACK WRAPPERS
-		template<typename _RetType, typename... _ArgTypes> struct MethodWrapper;
-	
-		//TODO: Move to .inl file
-		template<>struct MethodWrapper<void>
-		{
-			static int execute(lua_State* pLuaState, Unsafe_MethodType fn, LuaFunction::ArgErrorCbType onArgError)
-			{
-				auto ppObj = GetObjectAndVerifyStackSize(pLuaState, 0);
-				if(ppObj == nullptr)
-					return onArgError(pLuaState, 0);
-
-				((*ppObj)->*(fn))();
-				return 0;
-			}
-		
-			static int execute(lua_State* pLuaState)
-			{
-				return execute(pLuaState, 
-								s_LuaFunctionTable[static_cast<unsigned int>(lua_tounsigned( pLuaState, lua_upvalueindex(1) ) )].pFunc, 
-								LuaFunction::DefaultErrorHandling);
-			}
-		};
-		
 		//Disable default constructor, destructor, copy constructor & assignment operator
 		LuaMethod(void);
 		~LuaMethod(void);
 		LuaMethod(const LuaMethod& src);
 		LuaMethod& operator=(const LuaMethod& src);
 	};
+
+    namespace detail {
+        //TODO: Move to .inl file
+        template<typename ClassT>struct MethodWrapper<ClassT, void>
+        {
+            static int execute(lua_State* pLuaState, typename LuaMethod<ClassT>::Unsafe_MethodType fn, ArgErrorCbType onArgError)
+            {
+                auto ppObj = LuaMethod<ClassT>::GetObjectAndVerifyStackSize(pLuaState, 0);
+                if(ppObj == nullptr)
+                    return onArgError(pLuaState, 0);
+                
+                ((*ppObj)->*(fn))();
+                return 0;
+            }
+            
+            static int execute(lua_State* pLuaState)
+            {
+                return execute(pLuaState,
+                               LuaMethod<ClassT>::s_LuaFunctionTable[static_cast<unsigned int>(lua_tointeger( pLuaState, lua_upvalueindex(1) ) )].pFunc,
+                               LuaFunction::DefaultErrorHandling);
+            }
+        };
+    }
 }
-	#include "LuaMethod.inl"
+
+#include "LuaMethod.inl"

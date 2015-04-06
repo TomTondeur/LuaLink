@@ -1,0 +1,396 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7ACFDAA21AD292F40025BF08 /* LuaClass.h in Headers */ = {isa = PBXBuildFile; fileRef = 7ACFDA881AD292F40025BF08 /* LuaClass.h */; };
+		7ACFDAA31AD292F40025BF08 /* luadbg.h in Headers */ = {isa = PBXBuildFile; fileRef = 7ACFDA8A1AD292F40025BF08 /* luadbg.h */; };
+		7ACFDAA41AD292F40025BF08 /* LuaFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7ACFDA8C1AD292F40025BF08 /* LuaFunction.cpp */; };
+		7ACFDAA51AD292F40025BF08 /* LuaFunction.h in Headers */ = {isa = PBXBuildFile; fileRef = 7ACFDA8D1AD292F40025BF08 /* LuaFunction.h */; };
+		7ACFDAA61AD292F40025BF08 /* LuaMethod.h in Headers */ = {isa = PBXBuildFile; fileRef = 7ACFDA911AD292F40025BF08 /* LuaMethod.h */; };
+		7ACFDAA71AD292F40025BF08 /* LuaScript.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7ACFDA941AD292F40025BF08 /* LuaScript.cpp */; };
+		7ACFDAA81AD292F40025BF08 /* LuaScript.h in Headers */ = {isa = PBXBuildFile; fileRef = 7ACFDA951AD292F40025BF08 /* LuaScript.h */; };
+		7ACFDAA91AD292F40025BF08 /* LuaStack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7ACFDA981AD292F40025BF08 /* LuaStack.cpp */; };
+		7ACFDAAA1AD292F40025BF08 /* LuaStack.h in Headers */ = {isa = PBXBuildFile; fileRef = 7ACFDA991AD292F40025BF08 /* LuaStack.h */; };
+		7ACFDAAB1AD292F40025BF08 /* LuaStaticMethod.h in Headers */ = {isa = PBXBuildFile; fileRef = 7ACFDA9C1AD292F40025BF08 /* LuaStaticMethod.h */; };
+		7ACFDAAC1AD292F40025BF08 /* LuaVariable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7ACFDA9F1AD292F40025BF08 /* LuaVariable.cpp */; };
+		7ACFDAAD1AD292F40025BF08 /* LuaVariable.h in Headers */ = {isa = PBXBuildFile; fileRef = 7ACFDAA01AD292F40025BF08 /* LuaVariable.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7ACFDAC71AD2C31B0025BF08 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7ACFDAC31AD2C31A0025BF08 /* LuaLinkTest.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7ACFDAB91AD2C31A0025BF08;
+			remoteInfo = LuaLinkTest;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		7ACFDA801AD292C10025BF08 /* libLuaLink.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libLuaLink.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		7ACFDA881AD292F40025BF08 /* LuaClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaClass.h; sourceTree = "<group>"; };
+		7ACFDA891AD292F40025BF08 /* LuaClass.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LuaClass.inl; sourceTree = "<group>"; };
+		7ACFDA8A1AD292F40025BF08 /* luadbg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = luadbg.h; sourceTree = "<group>"; };
+		7ACFDA8C1AD292F40025BF08 /* LuaFunction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuaFunction.cpp; sourceTree = "<group>"; };
+		7ACFDA8D1AD292F40025BF08 /* LuaFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaFunction.h; sourceTree = "<group>"; };
+		7ACFDA8E1AD292F40025BF08 /* LuaFunction.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LuaFunction.inl; sourceTree = "<group>"; };
+		7ACFDA8F1AD292F40025BF08 /* LuaLink */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LuaLink; sourceTree = "<group>"; };
+		7ACFDA911AD292F40025BF08 /* LuaMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaMethod.h; sourceTree = "<group>"; };
+		7ACFDA921AD292F40025BF08 /* LuaMethod.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LuaMethod.inl; sourceTree = "<group>"; };
+		7ACFDA941AD292F40025BF08 /* LuaScript.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuaScript.cpp; sourceTree = "<group>"; };
+		7ACFDA951AD292F40025BF08 /* LuaScript.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaScript.h; sourceTree = "<group>"; };
+		7ACFDA961AD292F40025BF08 /* LuaScript.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LuaScript.inl; sourceTree = "<group>"; };
+		7ACFDA981AD292F40025BF08 /* LuaStack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuaStack.cpp; sourceTree = "<group>"; };
+		7ACFDA991AD292F40025BF08 /* LuaStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaStack.h; sourceTree = "<group>"; };
+		7ACFDA9A1AD292F40025BF08 /* LuaStack.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LuaStack.inl; sourceTree = "<group>"; };
+		7ACFDA9C1AD292F40025BF08 /* LuaStaticMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaStaticMethod.h; sourceTree = "<group>"; };
+		7ACFDA9D1AD292F40025BF08 /* LuaStaticMethod.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LuaStaticMethod.inl; sourceTree = "<group>"; };
+		7ACFDA9F1AD292F40025BF08 /* LuaVariable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuaVariable.cpp; sourceTree = "<group>"; };
+		7ACFDAA01AD292F40025BF08 /* LuaVariable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaVariable.h; sourceTree = "<group>"; };
+		7ACFDAA11AD292F40025BF08 /* LuaVariable.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LuaVariable.inl; sourceTree = "<group>"; };
+		7ACFDAAE1AD2B1D60025BF08 /* liblua.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblua.a; path = ../../../../usr/local/lib/liblua.a; sourceTree = "<group>"; };
+		7ACFDAC31AD2C31A0025BF08 /* LuaLinkTest.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LuaLinkTest.xcodeproj; path = LuaLinkTest/LuaLinkTest.xcodeproj; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7ACFDA7D1AD292C10025BF08 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7ACFDA771AD292C00025BF08 = {
+			isa = PBXGroup;
+			children = (
+				7ACFDAC31AD2C31A0025BF08 /* LuaLinkTest.xcodeproj */,
+				7ACFDAAE1AD2B1D60025BF08 /* liblua.a */,
+				7ACFDA871AD292F40025BF08 /* LuaClass */,
+				7ACFDA8A1AD292F40025BF08 /* luadbg.h */,
+				7ACFDA8B1AD292F40025BF08 /* LuaFunction */,
+				7ACFDA8F1AD292F40025BF08 /* LuaLink */,
+				7ACFDA901AD292F40025BF08 /* LuaMethod */,
+				7ACFDA931AD292F40025BF08 /* LuaScript */,
+				7ACFDA971AD292F40025BF08 /* LuaStack */,
+				7ACFDA9B1AD292F40025BF08 /* LuaStaticMethod */,
+				7ACFDA9E1AD292F40025BF08 /* LuaVariable */,
+				7ACFDA811AD292C10025BF08 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7ACFDA811AD292C10025BF08 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7ACFDA801AD292C10025BF08 /* libLuaLink.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7ACFDA871AD292F40025BF08 /* LuaClass */ = {
+			isa = PBXGroup;
+			children = (
+				7ACFDA881AD292F40025BF08 /* LuaClass.h */,
+				7ACFDA891AD292F40025BF08 /* LuaClass.inl */,
+			);
+			path = LuaClass;
+			sourceTree = "<group>";
+		};
+		7ACFDA8B1AD292F40025BF08 /* LuaFunction */ = {
+			isa = PBXGroup;
+			children = (
+				7ACFDA8C1AD292F40025BF08 /* LuaFunction.cpp */,
+				7ACFDA8D1AD292F40025BF08 /* LuaFunction.h */,
+				7ACFDA8E1AD292F40025BF08 /* LuaFunction.inl */,
+			);
+			path = LuaFunction;
+			sourceTree = "<group>";
+		};
+		7ACFDA901AD292F40025BF08 /* LuaMethod */ = {
+			isa = PBXGroup;
+			children = (
+				7ACFDA911AD292F40025BF08 /* LuaMethod.h */,
+				7ACFDA921AD292F40025BF08 /* LuaMethod.inl */,
+			);
+			path = LuaMethod;
+			sourceTree = "<group>";
+		};
+		7ACFDA931AD292F40025BF08 /* LuaScript */ = {
+			isa = PBXGroup;
+			children = (
+				7ACFDA941AD292F40025BF08 /* LuaScript.cpp */,
+				7ACFDA951AD292F40025BF08 /* LuaScript.h */,
+				7ACFDA961AD292F40025BF08 /* LuaScript.inl */,
+			);
+			path = LuaScript;
+			sourceTree = "<group>";
+		};
+		7ACFDA971AD292F40025BF08 /* LuaStack */ = {
+			isa = PBXGroup;
+			children = (
+				7ACFDA981AD292F40025BF08 /* LuaStack.cpp */,
+				7ACFDA991AD292F40025BF08 /* LuaStack.h */,
+				7ACFDA9A1AD292F40025BF08 /* LuaStack.inl */,
+			);
+			path = LuaStack;
+			sourceTree = "<group>";
+		};
+		7ACFDA9B1AD292F40025BF08 /* LuaStaticMethod */ = {
+			isa = PBXGroup;
+			children = (
+				7ACFDA9C1AD292F40025BF08 /* LuaStaticMethod.h */,
+				7ACFDA9D1AD292F40025BF08 /* LuaStaticMethod.inl */,
+			);
+			path = LuaStaticMethod;
+			sourceTree = "<group>";
+		};
+		7ACFDA9E1AD292F40025BF08 /* LuaVariable */ = {
+			isa = PBXGroup;
+			children = (
+				7ACFDA9F1AD292F40025BF08 /* LuaVariable.cpp */,
+				7ACFDAA01AD292F40025BF08 /* LuaVariable.h */,
+				7ACFDAA11AD292F40025BF08 /* LuaVariable.inl */,
+			);
+			path = LuaVariable;
+			sourceTree = "<group>";
+		};
+		7ACFDAC41AD2C31A0025BF08 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7ACFDAC81AD2C31B0025BF08 /* LuaLinkTest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		7ACFDA7E1AD292C10025BF08 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7ACFDAAA1AD292F40025BF08 /* LuaStack.h in Headers */,
+				7ACFDAAB1AD292F40025BF08 /* LuaStaticMethod.h in Headers */,
+				7ACFDAA61AD292F40025BF08 /* LuaMethod.h in Headers */,
+				7ACFDAAD1AD292F40025BF08 /* LuaVariable.h in Headers */,
+				7ACFDAA81AD292F40025BF08 /* LuaScript.h in Headers */,
+				7ACFDAA51AD292F40025BF08 /* LuaFunction.h in Headers */,
+				7ACFDAA21AD292F40025BF08 /* LuaClass.h in Headers */,
+				7ACFDAA31AD292F40025BF08 /* luadbg.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		7ACFDA7F1AD292C10025BF08 /* LuaLink */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7ACFDA841AD292C10025BF08 /* Build configuration list for PBXNativeTarget "LuaLink" */;
+			buildPhases = (
+				7ACFDA7C1AD292C10025BF08 /* Sources */,
+				7ACFDA7D1AD292C10025BF08 /* Frameworks */,
+				7ACFDA7E1AD292C10025BF08 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LuaLink;
+			productName = LuaLink;
+			productReference = 7ACFDA801AD292C10025BF08 /* libLuaLink.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7ACFDA781AD292C00025BF08 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0620;
+				ORGANIZATIONNAME = "Tom Tondeur";
+				TargetAttributes = {
+					7ACFDA7F1AD292C10025BF08 = {
+						CreatedOnToolsVersion = 6.2;
+					};
+				};
+			};
+			buildConfigurationList = 7ACFDA7B1AD292C00025BF08 /* Build configuration list for PBXProject "LuaLink" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7ACFDA771AD292C00025BF08;
+			productRefGroup = 7ACFDA811AD292C10025BF08 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 7ACFDAC41AD2C31A0025BF08 /* Products */;
+					ProjectRef = 7ACFDAC31AD2C31A0025BF08 /* LuaLinkTest.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				7ACFDA7F1AD292C10025BF08 /* LuaLink */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		7ACFDAC81AD2C31B0025BF08 /* LuaLinkTest */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = LuaLinkTest;
+			remoteRef = 7ACFDAC71AD2C31B0025BF08 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7ACFDA7C1AD292C10025BF08 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7ACFDAAC1AD292F40025BF08 /* LuaVariable.cpp in Sources */,
+				7ACFDAA91AD292F40025BF08 /* LuaStack.cpp in Sources */,
+				7ACFDAA41AD292F40025BF08 /* LuaFunction.cpp in Sources */,
+				7ACFDAA71AD292F40025BF08 /* LuaScript.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		7ACFDA821AD292C10025BF08 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		7ACFDA831AD292C10025BF08 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		7ACFDA851AD292C10025BF08 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/local/lib/lua/5.3/src/,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		7ACFDA861AD292C10025BF08 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/local/lib/lua/5.3/src/,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7ACFDA7B1AD292C00025BF08 /* Build configuration list for PBXProject "LuaLink" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7ACFDA821AD292C10025BF08 /* Debug */,
+				7ACFDA831AD292C10025BF08 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7ACFDA841AD292C10025BF08 /* Build configuration list for PBXNativeTarget "LuaLink" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7ACFDA851AD292C10025BF08 /* Debug */,
+				7ACFDA861AD292C10025BF08 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7ACFDA781AD292C00025BF08 /* Project object */;
+}

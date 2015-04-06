@@ -1,4 +1,4 @@
-// Copyright © 2013 Tom Tondeur
+// Copyright ï¿½ 2013 Tom Tondeur
 // 
 // This file is part of LuaLink.
 // 
@@ -17,7 +17,9 @@
 
 #pragma once
 
+#include <string>
 #include <lua.hpp>
+#include "../LuaStack/LuaStack.h"
 
 namespace LuaLink
 {

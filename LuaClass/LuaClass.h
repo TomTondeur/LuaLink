@@ -1,4 +1,4 @@
-// Copyright © 2013 Tom Tondeur
+// Copyright ï¿½ 2013 Tom Tondeur
 // 
 // This file is part of LuaLink.
 // 
@@ -34,7 +34,7 @@ namespace LuaLink
 
 		// // Creates new object in C++ and pushes it to the Lua stack
 		static int ConstructorWrapper(lua_State * L);
-		static int ConstructorWrapper(lua_State * L, LuaFunction::WrapperDoubleArg pWrapper, void* cb, LuaFunction::ArgErrorCbType onArgError);
+		static int ConstructorWrapper(lua_State * L, detail::WrapperDoubleArg pWrapper, void* cb, detail::ArgErrorCbType onArgError);
 
 		// // Metamethod, called when garbage collector gets rid of our object
 		static int gc_obj(lua_State * L);	

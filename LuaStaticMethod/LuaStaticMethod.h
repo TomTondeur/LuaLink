@@ -1,4 +1,4 @@
-// Copyright © 2013 Tom Tondeur
+// Copyright ï¿½ 2013 Tom Tondeur
 // 
 // This file is part of LuaLink.
 // 
@@ -40,7 +40,7 @@ namespace LuaLink
 		static std::map<std::string, std::vector<LuaFunction::Unsafe_LuaFunc> > s_LuaFunctionMap;
 	
 		//Will be called from OverloadedCTorDispatch when someone calls an overloaded constructor from Lua
-		static int(*s_OverloadedConstructorWrapper)(lua_State*, LuaFunction::WrapperDoubleArg, void*, LuaFunction::ArgErrorCbType onArgError);
+		static int(*s_OverloadedConstructorWrapper)(lua_State*, detail::WrapperDoubleArg, void*, detail::ArgErrorCbType onArgError);
 	
 		template<typename _RetType, typename... _ArgTypes>
 		// Register implementation
@@ -48,7 +48,7 @@ namespace LuaLink
 	
 		//Pushes all registered static methods to the provided lua_State*
 		static void Commit(lua_State* pLuaState, int metatable);
-		static void CommitConstructors(lua_State* pLuaState, int metatable, lua_CFunction ctorWrapper, int(*overloadedCtorWrapper)(lua_State*, LuaFunction::WrapperDoubleArg, void*, LuaFunction::ArgErrorCbType onArgError));
+		static void CommitConstructors(lua_State* pLuaState, int metatable, lua_CFunction ctorWrapper, int(*overloadedCtorWrapper)(lua_State*, detail::WrapperDoubleArg, void*, detail::ArgErrorCbType onArgError));
 
 		//Will serve as callback from Lua when calling an overloaded constructor
 		static int OverloadedCTorDispatch(lua_State* L);
