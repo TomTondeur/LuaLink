@@ -24,52 +24,85 @@
 
 namespace LuaLink
 {
+    template<typename T>
+    struct cast_from {
+        template<typename U>
+        static U static__cast(const T& t)
+        {
+            return static_cast<U>(t);
+        }
+        
+        template<typename U>
+        static U reinterpret__cast(const T& t)
+        {
+            return reinterpret_cast<U>(t);
+        }
+        
+        template<typename U>
+        static U dynamic__cast(const T& t)
+        {
+            return dynamic_cast<U>(t);
+        }
+    };
+
 	template <typename T>
 	std::string LuaClass<T>::s_ClassName = std::string();
+    
+    template <typename T>
+    void(*LuaClass<T>::s_fn_inst_reg)(T*) = nullptr;
 
 	template <typename T>
 	// // Registers Class T in the Lua environment
-	void LuaClass<T>::Register(const std::string& className, bool bAllowInheritance) 
+	void LuaClass<T>::Register(const std::string& className, bool bAllowInheritance)
 	{
-		s_ClassName = className;
-
-		lua_State* L = LuaScript::GetLuaState();
-
-		LuaVariable::Commit(L); //Flush any global variables that may be registered, just in case
-
-		//Create new table
-		lua_newtable(L);
-		
-		//Push metamethods
-		//
-		lua_pushstring(L, "__gc");
-		lua_pushcfunction(L, gc_obj);
-		lua_settable(L, -3);
-			
-		lua_pushstring(L, "__tostring");
-		lua_pushcfunction(L, to_string);
-		lua_settable(L, -3);
-		
-		//self.__index = self => when used as metatable, missing identifiers will be looked up in this table
-		lua_pushstring(L,"__index");
-		lua_pushvalue(L,-2);
-		lua_settable(L,-3);
-
-		//enable/disable inheritance
-		lua_pushstring(L, "inherit");
-		lua_pushcfunction(L, bAllowInheritance ? returnDerived : noInheritance);
-		lua_settable(L,-3);
-	
-		T::RegisterStaticsAndMethods();
-	
-		LuaStaticMethod<T>::CommitConstructors(L, -3, ConstructorWrapper, ConstructorWrapper);
-		LuaStaticMethod<T>::Commit(L, -3);
-		LuaMethod<T>::Commit(L, -3);
-		LuaVariable::Commit(L);
-		
-		//Set table name (pops table)
-		lua_setglobal(L, s_ClassName.c_str());
+        Register(className, bAllowInheritance, T::RegisterStaticsAndMethods,
+                 cast_from<void(*)(T*)>::template reinterpret__cast<void(*)(void*)>(T::RegisterVariables));
 	}
+    
+    template<typename T>
+    void LuaClass<T>::Register(const std::string& className, bool bAllowInheritance, void(*fn_static_reg)(void), void(*fn_inst_reg)(void*))
+    {
+        s_ClassName = className;
+        s_fn_inst_reg = reinterpret_cast<void(*)(T*)>(fn_inst_reg);
+        
+        lua_State* L = LuaScript::GetLuaState();
+        
+        LuaVariable::Commit(L); //Flush any global variables that may be registered, just in case
+        
+        //Create new table
+        lua_newtable(L);
+        
+        //Push metamethods
+        //
+        lua_pushstring(L, "__gc");
+        lua_pushcfunction(L, gc_obj);
+        lua_settable(L, -3);
+        
+        lua_pushstring(L, "__tostring");
+        lua_pushcfunction(L, to_string);
+        lua_settable(L, -3);
+        
+        //self.__index = self => when used as metatable, missing identifiers will be looked up in this table
+        lua_pushstring(L,"__index");
+        lua_pushvalue(L,-2);
+        lua_settable(L,-3);
+        
+        //enable/disable inheritance
+        lua_pushstring(L, "inherit");
+        lua_pushcfunction(L, bAllowInheritance ? returnDerived : noInheritance);
+        lua_settable(L,-3);
+        
+        T::RegisterStaticsAndMethods();
+        
+        LuaStaticMethod<T>::CommitConstructors(L, -3, ConstructorWrapper, ConstructorWrapper);
+        LuaStaticMethod<T>::Commit(L, -3);
+        LuaMethod<T>::Commit(L, -3);
+        LuaVariable::Commit(L);
+        
+        //Set table name (pops table)
+        lua_setglobal(L, s_ClassName.c_str());
+    }
+    
 	
 	template <typename T>
 	int LuaClass<T>::ConstructorWrapper(lua_State * L)
@@ -98,7 +131,7 @@ namespace LuaLink
 		lua_settable(L,-3);
 
 		//Push nonstatic properties
-		pObj->RegisterVariables();
+        T::RegisterVariables(pObj);
 		LuaVariable::Commit(L,-3);
 
 		//Set the class table as metatable for this object
