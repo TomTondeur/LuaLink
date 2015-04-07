@@ -32,6 +32,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7A2998EC1AD40B6F000305D2 /* LuaAuto.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LuaAuto.hpp; sourceTree = "<group>"; };
 		7ACFDA801AD292C10025BF08 /* libLuaLink.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libLuaLink.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7ACFDA881AD292F40025BF08 /* LuaClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaClass.h; sourceTree = "<group>"; };
 		7ACFDA891AD292F40025BF08 /* LuaClass.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LuaClass.inl; sourceTree = "<group>"; };
@@ -73,8 +74,9 @@
 			children = (
 				7ACFDAC31AD2C31A0025BF08 /* LuaLinkTest.xcodeproj */,
 				7ACFDAAE1AD2B1D60025BF08 /* liblua.a */,
-				7ACFDA871AD292F40025BF08 /* LuaClass */,
+				7A2998EC1AD40B6F000305D2 /* LuaAuto.hpp */,
 				7ACFDA8A1AD292F40025BF08 /* luadbg.h */,
+				7ACFDA871AD292F40025BF08 /* LuaClass */,
 				7ACFDA8B1AD292F40025BF08 /* LuaFunction */,
 				7ACFDA8F1AD292F40025BF08 /* LuaLink */,
 				7ACFDA901AD292F40025BF08 /* LuaMethod */,

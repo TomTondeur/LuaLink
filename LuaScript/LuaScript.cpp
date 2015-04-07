@@ -1,4 +1,4 @@
-// Copyright © 2013 Tom Tondeur
+// Copyright ï¿½ 2013 Tom Tondeur
 // 
 // This file is part of LuaLink.
 // 
@@ -17,6 +17,7 @@
 
 #include "LuaScript.h"
 #include "../LuaClass/LuaClass.h"
+#include "LuaAuto.hpp"
 #include <map>
 
 using namespace LuaLink;
@@ -72,7 +73,10 @@ void LuaScript::Initialize(void)
 		Load();
 
 	LuaFunction::Release(); //Release any leftover functions
-
+    
+    LuaAutoFunction::RegisterAll();
+    LuaAutoClass::RegisterAll();
+    
 	if (InitializeEnvironment)
 		InitializeEnvironment();
 
