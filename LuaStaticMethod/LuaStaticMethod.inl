@@ -20,7 +20,7 @@
 namespace LuaLink
 {
 	template<typename ClassT>
-	std::map<std::string, std::vector<LuaFunction::Unsafe_LuaFunc> > LuaStaticMethod<ClassT>::s_LuaFunctionMap = std::map<std::string, std::vector<LuaFunction::Unsafe_LuaFunc> >();
+	std::map<std::string, std::vector<LuaFunction::Unsafe_LuaFunc> > LuaStaticMethod<ClassT>::s_LuaFunctionMap;
 
 	template<typename ClassT>
 	int(*LuaStaticMethod<ClassT>::s_OverloadedConstructorWrapper)(lua_State*, detail::WrapperDoubleArg, void*, detail::ArgErrorCbType onArgError) = nullptr;

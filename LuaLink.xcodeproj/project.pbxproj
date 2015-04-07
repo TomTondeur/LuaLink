@@ -9,15 +9,11 @@
 /* Begin PBXBuildFile section */
 		7ACFDAA21AD292F40025BF08 /* LuaClass.h in Headers */ = {isa = PBXBuildFile; fileRef = 7ACFDA881AD292F40025BF08 /* LuaClass.h */; };
 		7ACFDAA31AD292F40025BF08 /* luadbg.h in Headers */ = {isa = PBXBuildFile; fileRef = 7ACFDA8A1AD292F40025BF08 /* luadbg.h */; };
-		7ACFDAA41AD292F40025BF08 /* LuaFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7ACFDA8C1AD292F40025BF08 /* LuaFunction.cpp */; };
 		7ACFDAA51AD292F40025BF08 /* LuaFunction.h in Headers */ = {isa = PBXBuildFile; fileRef = 7ACFDA8D1AD292F40025BF08 /* LuaFunction.h */; };
 		7ACFDAA61AD292F40025BF08 /* LuaMethod.h in Headers */ = {isa = PBXBuildFile; fileRef = 7ACFDA911AD292F40025BF08 /* LuaMethod.h */; };
-		7ACFDAA71AD292F40025BF08 /* LuaScript.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7ACFDA941AD292F40025BF08 /* LuaScript.cpp */; };
 		7ACFDAA81AD292F40025BF08 /* LuaScript.h in Headers */ = {isa = PBXBuildFile; fileRef = 7ACFDA951AD292F40025BF08 /* LuaScript.h */; };
-		7ACFDAA91AD292F40025BF08 /* LuaStack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7ACFDA981AD292F40025BF08 /* LuaStack.cpp */; };
 		7ACFDAAA1AD292F40025BF08 /* LuaStack.h in Headers */ = {isa = PBXBuildFile; fileRef = 7ACFDA991AD292F40025BF08 /* LuaStack.h */; };
 		7ACFDAAB1AD292F40025BF08 /* LuaStaticMethod.h in Headers */ = {isa = PBXBuildFile; fileRef = 7ACFDA9C1AD292F40025BF08 /* LuaStaticMethod.h */; };
-		7ACFDAAC1AD292F40025BF08 /* LuaVariable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7ACFDA9F1AD292F40025BF08 /* LuaVariable.cpp */; };
 		7ACFDAAD1AD292F40025BF08 /* LuaVariable.h in Headers */ = {isa = PBXBuildFile; fileRef = 7ACFDAA01AD292F40025BF08 /* LuaVariable.h */; };
 /* End PBXBuildFile section */
 
@@ -37,21 +33,17 @@
 		7ACFDA881AD292F40025BF08 /* LuaClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaClass.h; sourceTree = "<group>"; };
 		7ACFDA891AD292F40025BF08 /* LuaClass.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LuaClass.inl; sourceTree = "<group>"; };
 		7ACFDA8A1AD292F40025BF08 /* luadbg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = luadbg.h; sourceTree = "<group>"; };
-		7ACFDA8C1AD292F40025BF08 /* LuaFunction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuaFunction.cpp; sourceTree = "<group>"; };
 		7ACFDA8D1AD292F40025BF08 /* LuaFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaFunction.h; sourceTree = "<group>"; };
 		7ACFDA8E1AD292F40025BF08 /* LuaFunction.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LuaFunction.inl; sourceTree = "<group>"; };
 		7ACFDA8F1AD292F40025BF08 /* LuaLink */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LuaLink; sourceTree = "<group>"; };
 		7ACFDA911AD292F40025BF08 /* LuaMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaMethod.h; sourceTree = "<group>"; };
 		7ACFDA921AD292F40025BF08 /* LuaMethod.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LuaMethod.inl; sourceTree = "<group>"; };
-		7ACFDA941AD292F40025BF08 /* LuaScript.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuaScript.cpp; sourceTree = "<group>"; };
 		7ACFDA951AD292F40025BF08 /* LuaScript.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaScript.h; sourceTree = "<group>"; };
 		7ACFDA961AD292F40025BF08 /* LuaScript.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LuaScript.inl; sourceTree = "<group>"; };
-		7ACFDA981AD292F40025BF08 /* LuaStack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuaStack.cpp; sourceTree = "<group>"; };
 		7ACFDA991AD292F40025BF08 /* LuaStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaStack.h; sourceTree = "<group>"; };
 		7ACFDA9A1AD292F40025BF08 /* LuaStack.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LuaStack.inl; sourceTree = "<group>"; };
 		7ACFDA9C1AD292F40025BF08 /* LuaStaticMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaStaticMethod.h; sourceTree = "<group>"; };
 		7ACFDA9D1AD292F40025BF08 /* LuaStaticMethod.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LuaStaticMethod.inl; sourceTree = "<group>"; };
-		7ACFDA9F1AD292F40025BF08 /* LuaVariable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuaVariable.cpp; sourceTree = "<group>"; };
 		7ACFDAA01AD292F40025BF08 /* LuaVariable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaVariable.h; sourceTree = "<group>"; };
 		7ACFDAA11AD292F40025BF08 /* LuaVariable.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LuaVariable.inl; sourceTree = "<group>"; };
 		7ACFDAAE1AD2B1D60025BF08 /* liblua.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblua.a; path = ../../../../usr/local/lib/liblua.a; sourceTree = "<group>"; };
@@ -108,7 +100,6 @@
 		7ACFDA8B1AD292F40025BF08 /* LuaFunction */ = {
 			isa = PBXGroup;
 			children = (
-				7ACFDA8C1AD292F40025BF08 /* LuaFunction.cpp */,
 				7ACFDA8D1AD292F40025BF08 /* LuaFunction.h */,
 				7ACFDA8E1AD292F40025BF08 /* LuaFunction.inl */,
 			);
@@ -127,7 +118,6 @@
 		7ACFDA931AD292F40025BF08 /* LuaScript */ = {
 			isa = PBXGroup;
 			children = (
-				7ACFDA941AD292F40025BF08 /* LuaScript.cpp */,
 				7ACFDA951AD292F40025BF08 /* LuaScript.h */,
 				7ACFDA961AD292F40025BF08 /* LuaScript.inl */,
 			);
@@ -137,7 +127,6 @@
 		7ACFDA971AD292F40025BF08 /* LuaStack */ = {
 			isa = PBXGroup;
 			children = (
-				7ACFDA981AD292F40025BF08 /* LuaStack.cpp */,
 				7ACFDA991AD292F40025BF08 /* LuaStack.h */,
 				7ACFDA9A1AD292F40025BF08 /* LuaStack.inl */,
 			);
@@ -156,7 +145,6 @@
 		7ACFDA9E1AD292F40025BF08 /* LuaVariable */ = {
 			isa = PBXGroup;
 			children = (
-				7ACFDA9F1AD292F40025BF08 /* LuaVariable.cpp */,
 				7ACFDAA01AD292F40025BF08 /* LuaVariable.h */,
 				7ACFDAA11AD292F40025BF08 /* LuaVariable.inl */,
 			);
@@ -261,10 +249,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7ACFDAAC1AD292F40025BF08 /* LuaVariable.cpp in Sources */,
-				7ACFDAA91AD292F40025BF08 /* LuaStack.cpp in Sources */,
-				7ACFDAA41AD292F40025BF08 /* LuaFunction.cpp in Sources */,
-				7ACFDAA71AD292F40025BF08 /* LuaScript.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -349,6 +333,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -362,6 +347,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,

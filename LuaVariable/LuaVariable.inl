@@ -29,21 +29,7 @@ namespace LuaLink
 	{
 		s_VariablesToCommit.push_back(Unsafe_VariableWrapper(&var, varName));
 	}
-
-	//Intermediate format to store variables as they wait to be commited to Lua
-	struct LuaVariable::Unsafe_VariableWrapper
-	{
-		template<typename T>
-		Unsafe_VariableWrapper(T* pVar, const std::string& name) : Data(static_cast<void*>(pVar)), 
-																	Name(name), 
-																	Getter(Implementation<T>::get), 
-																	Setter(Implementation<T>::set) {}
-		void* Data;
-		lua_CFunction Getter;
-		lua_CFunction Setter;
-		std::string Name;
-	};
-
+    
 	template<typename T>
 	//Getter for auto-properties
 	int LuaVariable::Implementation<T>::get(lua_State* L)
@@ -59,4 +45,57 @@ namespace LuaLink
 		*static_cast<T*>(lua_touserdata(L, lua_upvalueindex(1))) = LuaStack::getVariable<T>(L, 1);
 		return 1;
 	}
+    
+    //Intermediate format to store variables as they wait to be commited to Lua
+    struct LuaVariable::Unsafe_VariableWrapper
+    {
+        template<typename T>
+        Unsafe_VariableWrapper(T* pVar, const std::string& name) : Data(static_cast<void*>(pVar)),
+        Name(name),
+        Getter(Implementation<T>::get),
+        Setter(Implementation<T>::set) {}
+        void* Data;
+        lua_CFunction Getter;
+        lua_CFunction Setter;
+        std::string Name;
+    };
+    
+#ifdef LUALINK_DEFINE
+    void LuaVariable::Commit(lua_State* pLuaState, int tableIdx)
+    {
+        //For each variable
+        for(auto& elem : s_VariablesToCommit)
+        {
+            //Push string to the stack when registering for a table, so we can call settable later
+            if(tableIdx != 0)
+                lua_pushstring(pLuaState, elem.Name.c_str());
+            
+            //Create new table to hold 'get' and 'set' methods
+            lua_newtable(pLuaState);
+            
+            //Push getter
+            lua_pushstring(pLuaState, "get");
+            lua_pushlightuserdata(pLuaState, elem.Data);
+            lua_pushcclosure(pLuaState, elem.Getter, 1);
+            lua_settable(pLuaState, -3);
+            
+            //Push setter
+            lua_pushstring(pLuaState, "set");
+            lua_pushlightuserdata(pLuaState, elem.Data);
+            lua_pushcclosure(pLuaState, elem.Setter, 1);
+            lua_settable(pLuaState, -3);
+            
+            //Set as global or as field in a table
+            if(tableIdx == 0)
+                lua_setglobal(pLuaState, elem.Name.c_str());
+            else
+                lua_settable(pLuaState, tableIdx);
+        }
+        
+        //Flush the cache of variables to commit so this can be re-used
+        s_VariablesToCommit.clear();
+    }
+    
+    std::vector<LuaVariable::Unsafe_VariableWrapper> LuaVariable::s_VariablesToCommit;
+#endif //LUALINK_DEFINE
 }

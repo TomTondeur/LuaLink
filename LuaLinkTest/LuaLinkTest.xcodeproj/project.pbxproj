@@ -10,6 +10,7 @@
 		7ACFDABD1AD2C31A0025BF08 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7ACFDABC1AD2C31A0025BF08 /* main.cpp */; };
 		7ACFDACA1AD2CC080025BF08 /* libLuaLink.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ACFDAC91AD2CC080025BF08 /* libLuaLink.a */; };
 		7ACFDACC1AD2CC270025BF08 /* liblua.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ACFDACB1AD2CC270025BF08 /* liblua.a */; };
+		7AF5C8571AD48CEF008B841C /* notmain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7AF5C8561AD48CEF008B841C /* notmain.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -29,6 +30,7 @@
 		7ACFDABC1AD2C31A0025BF08 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		7ACFDAC91AD2CC080025BF08 /* libLuaLink.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLuaLink.a; path = "../../../Library/Developer/Xcode/DerivedData/LuaLink-dgducdobcmgjohcaajqxkczpjbpc/Build/Products/Debug/libLuaLink.a"; sourceTree = "<group>"; };
 		7ACFDACB1AD2CC270025BF08 /* liblua.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblua.a; path = ../../../../../usr/local/lib/liblua.a; sourceTree = "<group>"; };
+		7AF5C8561AD48CEF008B841C /* notmain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = notmain.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 			isa = PBXGroup;
 			children = (
 				7ACFDABC1AD2C31A0025BF08 /* main.cpp */,
+				7AF5C8561AD48CEF008B841C /* notmain.cpp */,
 			);
 			path = LuaLinkTest;
 			sourceTree = "<group>";
@@ -126,6 +129,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7AF5C8571AD48CEF008B841C /* notmain.cpp in Sources */,
 				7ACFDABD1AD2C31A0025BF08 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -212,6 +216,7 @@
 		7ACFDAC11AD2C31A0025BF08 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -229,6 +234,7 @@
 		7ACFDAC21AD2C31A0025BF08 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -262,6 +268,7 @@
 				7ACFDAC21AD2C31A0025BF08 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

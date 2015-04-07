@@ -257,9 +257,9 @@ namespace LuaLink
 #undef EXECUTE_V2
     
     template<typename ClassT>
-    std::vector<typename LuaMethod<ClassT>::Unsafe_MethodWrapper> LuaMethod<ClassT>::s_LuaFunctionTable = std::vector<typename LuaMethod<ClassT>::Unsafe_MethodWrapper>();
+    std::vector<typename LuaMethod<ClassT>::Unsafe_MethodWrapper> LuaMethod<ClassT>::s_LuaFunctionTable;
     
     template<typename ClassT>
-    std::map<std::string, std::vector<typename LuaMethod<ClassT>::Unsafe_MethodWrapper> > LuaMethod<ClassT>::s_LuaFunctionMap = std::map<std::string, std::vector<typename LuaMethod<ClassT>::Unsafe_MethodWrapper> >();
+    std::map<std::string, std::vector<typename LuaMethod<ClassT>::Unsafe_MethodWrapper> > LuaMethod<ClassT>::s_LuaFunctionMap;
     
 }
