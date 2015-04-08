@@ -19,7 +19,7 @@
 
 #include <string>
 #include <lua.hpp>
-#include "../LuaStack/LuaStack.h"
+#include "LuaStack.h"
 
 namespace LuaLink
 {

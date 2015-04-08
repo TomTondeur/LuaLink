@@ -20,9 +20,9 @@
 #include <sstream>
 #include <map>
 
-#include "../luadbg.h"
-#include "../LuaStack/LuaStack.h"
-#include "../LuaClass/LuaClass.h"
+#include "luadbg.h"
+#include "LuaStack.h"
+#include "LuaClass.h"
 #include "LuaAuto.hpp"
 
 namespace LuaLink

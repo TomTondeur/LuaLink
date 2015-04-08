@@ -16,7 +16,7 @@
 // along with LuaLink.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
-#include "../LuaFunction/LuaFunction.h"
+#include "LuaFunction.h"
 
 namespace LuaLink
 {

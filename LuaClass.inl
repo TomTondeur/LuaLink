@@ -17,10 +17,10 @@
 
 #pragma once
 
-#include "../LuaMethod/LuaMethod.h"
-#include "../LuaStaticMethod/LuaStaticMethod.h"
-#include "../LuaVariable/LuaVariable.h"
-#include "../LuaScript/LuaScript.h"
+#include "LuaMethod.h"
+#include "LuaStaticMethod.h"
+#include "LuaVariable.h"
+#include "LuaScript.h"
 
 namespace LuaLink
 {

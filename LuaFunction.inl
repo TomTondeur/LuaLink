@@ -17,7 +17,7 @@
 
 #pragma once
 
-#include "../LuaStack/LuaStack.h"
+#include "LuaStack.h"
 
 namespace LuaLink
 {
