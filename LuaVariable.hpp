@@ -24,8 +24,9 @@ namespace LuaLink
 {
 	template <typename T> class LuaClass;
 
-	struct LuaVariable
+	class LuaVariable
 	{
+    public:
 		template<typename T>
 		// // Register a variable of type T, will be automatically registered for a class if done so in the appropriate member function
 		static void Register(T& var, const char* varName);
@@ -53,10 +54,10 @@ namespace LuaLink
 		};
 		
 		//Disable default constructor, destructor, copy constructor & assignment operator
-		LuaVariable(void);
-		~LuaVariable(void);
-		LuaVariable(const LuaVariable& src);
-		LuaVariable& operator=(const LuaVariable& src);
+		LuaVariable(void) = delete;
+		~LuaVariable(void) = delete;
+		LuaVariable(const LuaVariable& src) = delete;
+		LuaVariable& operator=(const LuaVariable& src) = delete;
 	};
 }
 

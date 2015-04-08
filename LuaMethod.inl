@@ -170,8 +170,22 @@ namespace LuaLink
 	#define EXECUTE_V2 static int execute(lua_State* L){ \
 		LuaMethod<ClassT>::PushThisPointer(L);\
 		return execute(L, LuaMethod<ClassT>::s_LuaFunctionTable[static_cast<unsigned int>(lua_tointeger( L, lua_upvalueindex(1) ) )].pFunc, LuaFunction::DefaultErrorHandling);}
-
+    
     namespace detail {
+        template<typename ClassT>
+        struct MethodWrapper<ClassT, void>
+        {
+            static int execute(lua_State* pLuaState, typename LuaMethod<ClassT>::Unsafe_MethodType fn, ArgErrorCbType onArgError)
+            {
+                GET_THIS(0);
+                
+                ((*ppObj)->*(fn))();
+                return 0;
+            }
+            
+            EXECUTE_V2
+        };
+        
         //no ret, 1 arg
         template<typename ClassT, typename _Arg1Type>
         struct MethodWrapper<ClassT, void, _Arg1Type>

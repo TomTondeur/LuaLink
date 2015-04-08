@@ -53,10 +53,10 @@ namespace LuaLink
 		static int noInheritance(lua_State* L);
 
 		//Disable default constructor, destructor, copy constructor & assignment operator
-		LuaClass(void);
-		~LuaClass(void);
-		LuaClass(const LuaClass& src);
-		LuaClass& operator=(const LuaClass& src);
+		LuaClass(void) = delete;
+		~LuaClass(void) = delete;
+		LuaClass(const LuaClass& src) = delete;
+		LuaClass& operator=(const LuaClass& src) = delete;
 	};
 }
 

@@ -24,12 +24,13 @@
 
 namespace LuaLink
 {
-	template<typename T> struct LuaStaticMethod;
-	template<typename T> struct LuaMethod;
+	template<typename T> class LuaStaticMethod;
+	template<typename T> class LuaMethod;
 	template<typename T> class	LuaClass;
 
-	struct LuaFunction
+	class LuaFunction
 	{
+    public:
 		template<typename FunctionType>
 		// // Add a C++ global function to the Lua environment
 		static void Register(FunctionType pFunc, const std::string& name);
@@ -37,10 +38,10 @@ namespace LuaLink
         static int DefaultErrorHandling(lua_State* L, int narg);
 		
 	private:	
-		template<typename T> friend struct LuaStaticMethod; //LuaStaticMethod uses the same function table as LuaFunction
+		template<typename T> friend class LuaStaticMethod; //LuaStaticMethod uses the same function table as LuaFunction
 		friend class LuaScript; //LuaScript needs access to Commit, rather befriend LuaScript than expose Commit to everything
 		template<typename T> friend class LuaClass;
-		template<typename T> friend struct LuaMethod;
+		template<typename T> friend class LuaMethod;
 	
 		//Struct form of wrapper/callbacks, necessary to keep a lookup table of all wrappers/callbacks
 		struct Unsafe_LuaFunc;
@@ -71,10 +72,10 @@ namespace LuaLink
 		static int LuaFunctionDispatch(lua_State* L);
 
 		//Disable default constructor, destructor, copy constructor & assignment operator
-		LuaFunction(void);
-		~LuaFunction(void);
-		LuaFunction(const LuaFunction& src);
-		LuaFunction& operator=(const LuaFunction& src);
+		LuaFunction(void) = delete;
+		~LuaFunction(void) = delete;
+		LuaFunction(const LuaFunction& src) = delete;
+		LuaFunction& operator=(const LuaFunction& src) = delete;
 	};
     
     namespace detail {

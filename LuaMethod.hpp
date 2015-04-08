@@ -27,8 +27,9 @@ namespace LuaLink
     }
 
 	template<typename ClassT>
-	struct LuaMethod
-	{	
+	class LuaMethod
+	{
+    public:
 		template<typename MemberFunctionType>
 		// // Add a C++ member function to the Lua environment
 		static void Register(MemberFunctionType pFunc, const std::string& name);
@@ -70,34 +71,11 @@ namespace LuaLink
 		static ClassT** GetObjectAndVerifyStackSize(lua_State* L, int nrOfArgs);
 	
 		//Disable default constructor, destructor, copy constructor & assignment operator
-		LuaMethod(void);
-		~LuaMethod(void);
-		LuaMethod(const LuaMethod& src);
-		LuaMethod& operator=(const LuaMethod& src);
+		LuaMethod(void) = delete;
+		~LuaMethod(void) = delete;
+		LuaMethod(const LuaMethod& src) = delete;
+		LuaMethod& operator=(const LuaMethod& src) = delete;
 	};
-
-    namespace detail {
-        //TODO: Move to .inl file
-        template<typename ClassT>struct MethodWrapper<ClassT, void>
-        {
-            static int execute(lua_State* pLuaState, typename LuaMethod<ClassT>::Unsafe_MethodType fn, ArgErrorCbType onArgError)
-            {
-                auto ppObj = LuaMethod<ClassT>::GetObjectAndVerifyStackSize(pLuaState, 0);
-                if(ppObj == nullptr)
-                    return onArgError(pLuaState, 0);
-                
-                ((*ppObj)->*(fn))();
-                return 0;
-            }
-            
-            static int execute(lua_State* pLuaState)
-            {
-                return execute(pLuaState,
-                               LuaMethod<ClassT>::s_LuaFunctionTable[static_cast<unsigned int>(lua_tointeger( pLuaState, lua_upvalueindex(1) ) )].pFunc,
-                               LuaFunction::DefaultErrorHandling);
-            }
-        };
-    }
 }
 
 #include "LuaMethod.inl"

@@ -30,7 +30,8 @@ namespace LuaLink {
         node* m_begin;
     };
     
-    struct LuaAutoClass {
+    class LuaAutoClass {
+    public:
         typedef void(*fn_register_statics_t)(void);
         typedef void(*fn_register_members_t)(void*);
         typedef void(*fn_register_class_t)(const std::string&, bool);
@@ -75,7 +76,8 @@ namespace LuaLink {
         bool m_is_inheritance_allowed;
     };
     
-    struct LuaAutoFunction {
+    class LuaAutoFunction {
+    public:
         template<typename _RetType, typename... _ArgTypes>
         LuaAutoFunction(_RetType(*fn)(_ArgTypes...), const char* name) :
         m_fn(reinterpret_cast<void(*)(void)>(fn)),

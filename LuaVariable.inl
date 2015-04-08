@@ -48,14 +48,14 @@ namespace LuaLink
     struct LuaVariable::Unsafe_VariableWrapper
     {
         template<typename T>
-        Unsafe_VariableWrapper(T* pVar, const std::string& name) : Data(static_cast<void*>(pVar)),
+        Unsafe_VariableWrapper(T* pVar, const char* name) : Data(static_cast<void*>(pVar)),
         Name(name),
         Getter(Implementation<T>::get),
         Setter(Implementation<T>::set) {}
         void* Data;
         lua_CFunction Getter;
         lua_CFunction Setter;
-        std::string Name;
+        const char* Name;
     };
     
 #ifdef LUALINK_DEFINE
@@ -66,7 +66,7 @@ namespace LuaLink
         {
             //Push string to the stack when registering for a table, so we can call settable later
             if(tableIdx != 0)
-                lua_pushstring(pLuaState, elem.Name.c_str());
+                lua_pushstring(pLuaState, elem.Name);
             
             //Create new table to hold 'get' and 'set' methods
             lua_newtable(pLuaState);
@@ -85,7 +85,7 @@ namespace LuaLink
             
             //Set as global or as field in a table
             if(tableIdx == 0)
-                lua_setglobal(pLuaState, elem.Name.c_str());
+                lua_setglobal(pLuaState, elem.Name);
             else
                 lua_settable(pLuaState, tableIdx);
         }

@@ -22,9 +22,10 @@
 
 namespace LuaLink
 {
-	struct LuaStack
+	class LuaStack
 	{
-		template<typename T> 
+    public:
+		template<typename T>
 		// // Returns the variable in the Lua stack at varIdx, isOk will be false if we failed to retrieve a value (of the right type)
 		static T getVariable(lua_State* pLua, int varIdx, bool& isOk);
 
@@ -45,10 +46,10 @@ namespace LuaLink
 		template<typename... T>	struct Implementation_pushStack;
 		
 		//Disable default constructor, destructor, copy constructor & assignment operator
-		LuaStack(void);
-		~LuaStack(void);
-		LuaStack(const LuaStack& src);
-		LuaStack& operator=(const LuaStack& src);
+		LuaStack(void) = delete;
+		~LuaStack(void) = delete;
+		LuaStack(const LuaStack& src) = delete;
+		LuaStack& operator=(const LuaStack& src) = delete;
 	};
 }
 

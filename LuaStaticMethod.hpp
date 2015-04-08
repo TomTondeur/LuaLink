@@ -23,11 +23,12 @@ namespace LuaLink
 {
 	//Forward declarations
 	template<typename T> class LuaClass;
-	template<typename T> struct LuaMethod;
+	template<typename T> class LuaMethod;
 
 	template<typename ClassT>
-	struct LuaStaticMethod
+	class LuaStaticMethod
 	{
+    public:
 		template<typename FunctionType>
 		// //Registers a static method of class ClassT to use in Lua
 		static void Register(FunctionType pFunc, const std::string& name);
@@ -35,7 +36,7 @@ namespace LuaLink
 	private:
 		//LuaClass and LuaMethod need more 'intimate access than we want to expose to the end user
 		friend class LuaClass<ClassT>;	
-		friend struct LuaMethod<ClassT>;
+		friend class LuaMethod<ClassT>;
 		
 		//Contains all registered static methods for class ClassT, is flushed after functions are pushed to Lua environment
 		static std::map<std::string, std::vector<LuaFunction::Unsafe_LuaFunc> > s_LuaFunctionMap;
@@ -55,10 +56,10 @@ namespace LuaLink
 		static int OverloadedCTorDispatch(lua_State* L);
 		
 		//Disable default constructor, destructor, copy constructor & assignment operator
-		LuaStaticMethod(void);
-		~LuaStaticMethod(void);
-		LuaStaticMethod(const LuaStaticMethod& src);
-		LuaStaticMethod& operator=(const LuaStaticMethod& src);
+		LuaStaticMethod(void) = delete;
+		~LuaStaticMethod(void) = delete;
+		LuaStaticMethod(const LuaStaticMethod& src) = delete;
+		LuaStaticMethod& operator=(const LuaStaticMethod& src) = delete;
 	};
 }
 

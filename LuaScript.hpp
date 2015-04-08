@@ -77,9 +77,9 @@ namespace LuaLink
 
 		static ::std::unique_ptr<lua_State> s_pLuaState;
 
-		//Disabling default copy ConstructorWrapper & assignment operator
-		LuaScript(const LuaScript& src);
-		LuaScript& operator=(const LuaScript& src);
+		//Disabling default copy constructor & assignment operator
+		LuaScript(const LuaScript& src) = delete;
+		LuaScript& operator=(const LuaScript& src) = delete;
 	};
 }
 
