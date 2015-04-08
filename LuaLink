@@ -27,6 +27,5 @@
 #include "LuaStaticMethod.h"
 #include "LuaVariable.h"
 #include "LuaAuto.hpp"
-#include "luadbg.h"
 
 #endif // LUALINK_H

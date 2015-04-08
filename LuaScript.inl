@@ -20,13 +20,22 @@
 #include <sstream>
 #include <map>
 
-#include "luadbg.h"
 #include "LuaStack.h"
 #include "LuaClass.h"
 #include "LuaAuto.hpp"
 
 namespace LuaLink
 {
+    struct LuaLoadException : public std::runtime_error
+    {
+        explicit LuaLoadException(const char* msg):std::runtime_error(msg){}
+    };
+    
+    struct LuaCallException : public std::runtime_error
+    {
+        explicit LuaCallException(const char* msg):std::runtime_error(msg){}
+    };
+
 	#define LUA_STATE s_pLuaState.get()
 	
 	//Call implementations
@@ -197,7 +206,7 @@ namespace LuaLink
                 throw LuaLoadException(lua_tostring(LUA_STATE, -1));
                 break;
             default:
-                throw LuaLoadException("An unknown error has occured while loading file " + m_Filename);
+                throw LuaLoadException(("An unknown error has occured while loading file " + m_Filename).c_str());
         }
     }
     
@@ -228,7 +237,7 @@ namespace LuaLink
                 throw LuaCallException(lua_tostring(LUA_STATE, -1));
                 break;
             default:
-                throw LuaCallException("An unknown error has occured while executing file " + m_Filename);
+                throw LuaCallException(("An unknown error has occured while executing file " + m_Filename).c_str());
         }
     }
     
