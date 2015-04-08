@@ -15,10 +15,10 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with LuaLink.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "LuaMethod.h"
-#include "LuaStaticMethod.h"
-#include "LuaVariable.h"
-#include "LuaScript.h"
+#include "LuaMethod.hpp"
+#include "LuaStaticMethod.hpp"
+#include "LuaVariable.hpp"
+#include "LuaScript.hpp"
 
 namespace LuaLink
 {

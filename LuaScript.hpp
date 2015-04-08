@@ -58,12 +58,12 @@ namespace LuaLink
         template<typename _RetType, typename... _ArgTypes>
         _RetType CallMethod(const char* className, const char* fnName, _ArgTypes... args);
 
-		template<typename _RetType>
-		struct Call;
-	
 	private:
 		template<typename T> friend class LuaClass;
-	
+        
+        template<typename _RetType>
+        struct Call;
+        
 		//Returns lua_State* (to use when commiting classes)
 		static lua_State* GetLuaState(void);
 

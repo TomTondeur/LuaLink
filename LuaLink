@@ -16,16 +16,12 @@
 // along with LuaLink.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
-#ifndef LUALINK_H
-#define LUALINK_H
 
-#include "LuaClass.h"
-#include "LuaFunction.h"
-#include "LuaMethod.h"
-#include "LuaScript.h"
-#include "LuaStack.h"
-#include "LuaStaticMethod.h"
-#include "LuaVariable.h"
+#include "LuaClass.hpp"
+#include "LuaFunction.hpp"
+#include "LuaMethod.hpp"
+#include "LuaScript.hpp"
+#include "LuaStack.hpp"
+#include "LuaStaticMethod.hpp"
+#include "LuaVariable.hpp"
 #include "LuaAuto.hpp"
-
-#endif // LUALINK_H

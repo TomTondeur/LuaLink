@@ -18,8 +18,8 @@
 #include <sstream>
 #include <map>
 
-#include "LuaStack.h"
-#include "LuaClass.h"
+#include "LuaStack.hpp"
+#include "LuaClass.hpp"
 #include "LuaAuto.hpp"
 
 namespace LuaLink
