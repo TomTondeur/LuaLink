@@ -16,6 +16,7 @@
 // along with LuaLink.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
+
 #include <vector>
 #include <lua.hpp>
 
@@ -58,4 +59,5 @@ namespace LuaLink
 		LuaVariable& operator=(const LuaVariable& src);
 	};
 }
-	#include "LuaVariable.inl"
+
+#include "LuaVariable.inl"

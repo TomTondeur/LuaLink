@@ -15,8 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with LuaLink.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef LUAATUO_HPP
-#define LUAATUO_HPP
+#pragma once
 
 namespace LuaLink {
     template<typename T>
@@ -163,6 +162,3 @@ LuaAutoClass::AddNode(&CLASS##_LuaClass_WLLN));
 WeakLinkedList<LuaLink::LuaAutoFunction>::node FN##_LuaFunction_WLLN( \
 LuaAutoFunction(FN,NAME), \
 LuaAutoFunction::AddNode(&FN##_LuaFunction_WLLN));
-
-
-#endif //LUAATUO_HPP

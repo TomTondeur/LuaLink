@@ -59,4 +59,5 @@ namespace LuaLink
 		LuaClass& operator=(const LuaClass& src);
 	};
 }
-	#include "LuaClass.inl"
+
+#include "LuaClass.inl"

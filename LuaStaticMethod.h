@@ -16,6 +16,7 @@
 // along with LuaLink.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
+
 #include "LuaFunction.h"
 
 namespace LuaLink
@@ -60,4 +61,5 @@ namespace LuaLink
 		LuaStaticMethod& operator=(const LuaStaticMethod& src);
 	};
 }
+
 #include "LuaStaticMethod.inl"

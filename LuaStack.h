@@ -51,4 +51,5 @@ namespace LuaLink
 		LuaStack& operator=(const LuaStack& src);
 	};
 }
+
 #include "LuaStack.inl"

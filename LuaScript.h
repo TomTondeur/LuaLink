@@ -82,4 +82,5 @@ namespace LuaLink
 		LuaScript& operator=(const LuaScript& src);
 	};
 }
-	#include "LuaScript.inl"
+
+#include "LuaScript.inl"
