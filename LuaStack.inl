@@ -27,15 +27,15 @@ namespace LuaLink
             pushStack(pLua, tailData...);
 		}
 	};
-
-	template<typename T>
-	struct LuaStack::Implementation_pushStack<T>{
-		static void pushStack(lua_State* pLua, T data) 
-		{ 
-			pushVariable<T>(pLua, data);
-		}
-	};
-
+    
+    template<typename T>
+    struct LuaStack::Implementation_pushStack<T>{
+        static void pushStack(lua_State* pLua, T data)
+        {
+            pushVariable<T>(pLua, data);
+        }
+    };
+    
 	template<>
 	struct LuaStack::Implementation_pushStack<>{
 		static void pushStack(lua_State* pLua) { }
@@ -46,10 +46,13 @@ namespace LuaLink
 	{
 		Implementation_pushStack<T...>::pushStack(pLua, data...);
 	}
-    
-    
+}
+
 #ifdef LUALINK_DEFINE
 
+#include <string>
+
+namespace LuaLink {
     //getVariable (safe version)
     
     template<>
@@ -211,6 +214,6 @@ namespace LuaLink
     {
         lua_pushlightuserdata(pLua, data);
     }
-#endif //LUALINK_DEFINE
-    
 }
+
+#endif //LUALINK_DEFINE
