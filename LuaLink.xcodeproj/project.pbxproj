@@ -44,6 +44,7 @@
 		7A7E2FCA1AD5CECD000EEA05 /* LuaStaticMethod.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LuaStaticMethod.inl; sourceTree = "<group>"; };
 		7A7E2FCB1AD5CECD000EEA05 /* LuaVariable.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LuaVariable.hpp; sourceTree = "<group>"; };
 		7A7E2FCC1AD5CECD000EEA05 /* LuaVariable.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LuaVariable.inl; sourceTree = "<group>"; };
+		7A97E5741AD6FC7F00EF471A /* TemplateUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TemplateUtil.h; sourceTree = "<group>"; };
 		7ACFDA801AD292C10025BF08 /* libLuaLink.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libLuaLink.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7ACFDAAE1AD2B1D60025BF08 /* liblua.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblua.a; path = ../../../../usr/local/lib/liblua.a; sourceTree = "<group>"; };
 		7ACFDAC31AD2C31A0025BF08 /* LuaLinkTest.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LuaLinkTest.xcodeproj; path = LuaLinkTest/LuaLinkTest.xcodeproj; sourceTree = "<group>"; };
@@ -67,6 +68,7 @@
 				7ACFDAAE1AD2B1D60025BF08 /* liblua.a */,
 				7A7E2FBD1AD5CECD000EEA05 /* LuaAuto.hpp */,
 				7A7E2FBE1AD5CECD000EEA05 /* LuaClass.hpp */,
+				7A97E5741AD6FC7F00EF471A /* TemplateUtil.h */,
 				7A7E2FBF1AD5CECD000EEA05 /* LuaClass.inl */,
 				7A7E2FC01AD5CECD000EEA05 /* LuaFunction.hpp */,
 				7A7E2FC11AD5CECD000EEA05 /* LuaFunction.inl */,

@@ -16,6 +16,7 @@
 // along with LuaLink.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "LuaStack.hpp"
+#include "TemplateUtil.h"
 #include <vector>
 #include <map>
 
@@ -161,10 +162,6 @@ namespace LuaLink
         bool isOk = true; \
         (void)isOk;
     
-	#define GET_ARG(ARGN) auto arg##ARGN = LuaStack::getVariable<_Arg##ARGN##Type>(pLuaState, ARGN, isOk); \
-        if(!isOk) \
-            return onArgError(pLuaState, ARGN);
-    
 	#define DO_LUACALLBACK(CBTYPE,...) ((*ppObj)->*(reinterpret_cast<CBTYPE>(fn)))( __VA_ARGS__ )
 
 	#define EXECUTE_V2 static int execute(lua_State* L){ \
@@ -172,52 +169,68 @@ namespace LuaLink
 		return execute(L, LuaMethod<ClassT>::s_LuaFunctionTable[static_cast<unsigned int>(lua_tointeger( L, lua_upvalueindex(1) ) )].pFunc, LuaFunction::DefaultErrorHandling);}
     
     namespace detail {
+        
+        // ret, n args
+        template<typename ClassT, typename _RetType, typename... _ArgTypes>
+        struct MethodWrapper
+        {
+            typedef _RetType(ClassT::*CbType)(_ArgTypes...);
+            
+            static int execute(lua_State* pLuaState, typename LuaMethod<ClassT>::Unsafe_MethodType fn, ArgErrorCbType onArgError)
+            {
+                GET_THIS(sizeof...(_ArgTypes))
+                
+                int errnum = 0;
+                auto tpl = build_tuple_from_lua_stack<_ArgTypes...>::execute(pLuaState, 1, isOk, onArgError, errnum);
+                if(!isOk)
+                    return errnum;
+                
+                LuaStack::pushVariable( pLuaState, call_mem(reinterpret_cast<CbType>(fn), *ppObj, tpl) );
+                
+                return 1;
+            }
+            
+            EXECUTE_V2
+        };
+        
+        //no ret, n args
+        template<typename ClassT, typename... _ArgTypes>
+        struct MethodWrapper<ClassT, void, _ArgTypes...>
+        {
+            typedef void(ClassT::*CbType)(_ArgTypes...);
+            
+            static int execute(lua_State* pLuaState, typename LuaMethod<ClassT>::Unsafe_MethodType fn, ArgErrorCbType onArgError)
+            {
+                GET_THIS(sizeof...(_ArgTypes))
+                
+                int errnum = 0;
+                auto tpl = build_tuple_from_lua_stack<_ArgTypes...>::execute(pLuaState, 1, isOk, onArgError, errnum);
+                if(!isOk)
+                    return errnum;
+                
+                call_mem(reinterpret_cast<CbType>(fn), *ppObj, tpl);
+                
+                return 0;
+            }
+            
+            EXECUTE_V2
+        };
+        
+        //no ret, 0 args
         template<typename ClassT>
         struct MethodWrapper<ClassT, void>
         {
             static int execute(lua_State* pLuaState, typename LuaMethod<ClassT>::Unsafe_MethodType fn, ArgErrorCbType onArgError)
             {
                 GET_THIS(0);
-                
-                ((*ppObj)->*(fn))();
+                DO_LUACALLBACK( void(ClassT::*)(void) );
                 return 0;
             }
             
             EXECUTE_V2
         };
         
-        //no ret, 1 arg
-        template<typename ClassT, typename _Arg1Type>
-        struct MethodWrapper<ClassT, void, _Arg1Type>
-        {
-            static int execute(lua_State* pLuaState, typename LuaMethod<ClassT>::Unsafe_MethodType fn, ArgErrorCbType onArgError)
-            {
-                GET_THIS(1)
-                GET_ARG(1)
-                DO_LUACALLBACK(void(ClassT::*)(_Arg1Type),arg1);
-                return 0;
-            }
-            
-            EXECUTE_V2
-        };
-        
-        //no ret, 2 arg
-        template<typename ClassT, typename _Arg1Type, typename _Arg2Type>
-        struct MethodWrapper<ClassT, void, _Arg1Type, _Arg2Type>
-        {
-            static int execute(lua_State* pLuaState, typename LuaMethod<ClassT>::Unsafe_MethodType fn, ArgErrorCbType onArgError)
-            {
-                GET_THIS(2)
-                GET_ARG(1)
-                GET_ARG(2)
-                DO_LUACALLBACK(void(ClassT::*)(_Arg1Type, _Arg2Type), arg1, arg2);
-                return 0;
-            }
-            
-            EXECUTE_V2
-        };
-        
-        //	 ret, 0 arg
+        //ret, 0 args
         template<typename ClassT, typename _RetType>
         struct MethodWrapper<ClassT, _RetType>
         {
@@ -225,37 +238,6 @@ namespace LuaLink
             {
                 GET_THIS(0)
                 LuaStack::pushVariable(	pLuaState, DO_LUACALLBACK( _RetType(ClassT::*)(void) ) );
-                return 1;
-            }
-            
-            EXECUTE_V2
-        };
-        
-        //	 ret, 1 arg
-        template<typename ClassT, typename _RetType, typename _Arg1Type>
-        struct MethodWrapper<ClassT, _RetType, _Arg1Type>
-        {
-            static int execute(lua_State* pLuaState, typename LuaMethod<ClassT>::Unsafe_MethodType fn, ArgErrorCbType onArgError)
-            {
-                GET_THIS(1)
-                GET_ARG(1)
-                LuaStack::pushVariable(	pLuaState, DO_LUACALLBACK(_RetType(ClassT::*)(_Arg1Type), arg1) );
-                return 1;
-            }
-            
-            EXECUTE_V2
-        };
-        
-        //	 ret, 2 arg
-        template<typename ClassT, typename _RetType, typename _Arg1Type, typename _Arg2Type>
-        struct MethodWrapper<ClassT, _RetType, _Arg1Type, _Arg2Type>
-        {
-            static int execute(lua_State* pLuaState, typename LuaMethod<ClassT>::Unsafe_MethodType fn, ArgErrorCbType onArgError)
-            {
-                GET_THIS(2)
-                GET_ARG(1)
-                GET_ARG(2)
-                LuaStack::pushVariable(	pLuaState, DO_LUACALLBACK(_RetType(ClassT::*)(_Arg1Type, _Arg2Type), arg1, arg2) );
                 return 1;
             }
             
