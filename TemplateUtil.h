@@ -8,8 +8,12 @@
 
 #pragma once
 
+#include "LuaStack.hpp"
+#include <tuple>
+
 namespace LuaLink {
     namespace detail {
+        typedef int(*ArgErrorCbType)(lua_State*, int);
         
         //build_tuple_from_stack
         template<typename... T> struct build_tuple_from_lua_stack;
@@ -87,11 +91,16 @@ namespace LuaLink {
             return call_mem_impl<F, P, Tuple, 0 == std::tuple_size<typename std::decay<Tuple>::type>::value, std::tuple_size<typename std::decay<Tuple>::type>::value>::call(f, p, std::forward<Tuple>(t));
         }
         
-//        template <typename F, typename P, typename Tuple>
-//        void call_mem(F f, P p, Tuple && t)
-//        {
-////            return call_mem_impl<F, P, Tuple, 0 == std::tuple_size<typename std::decay<Tuple>::type>::value, std::tuple_size<typename std::decay<Tuple>::type>::value>::call(f, p, std::forward<Tuple>(t));
-//        }
+        struct CStrCmp {
+            bool operator()(const char* a, const char* b) const;
+        };
+        
+#ifdef LUALINK_DEFINE
+        bool CStrCmp::operator()(const char* a, const char* b) const
+        {
+            return strcmp(a, b) < 0;
+        }
+#endif
     }
 }
 

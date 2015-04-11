@@ -34,7 +34,7 @@ namespace LuaLink {
     public:
         typedef void(*fn_register_statics_t)(void);
         typedef void(*fn_register_members_t)(void*);
-        typedef void(*fn_register_class_t)(const std::string&, bool);
+        typedef void(*fn_register_class_t)(const char*, bool);
         
         template<typename T>
         LuaAutoClass(const char* name,

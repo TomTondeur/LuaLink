@@ -44,21 +44,21 @@ namespace LuaLink
     };
 
 	template <typename T>
-	std::string LuaClass<T>::s_ClassName = std::string();
+	const char* LuaClass<T>::s_ClassName = nullptr;
     
     template <typename T>
     void(*LuaClass<T>::s_fn_inst_reg)(T*) = nullptr;
 
 	template <typename T>
 	// // Registers Class T in the Lua environment
-	void LuaClass<T>::Register(const std::string& className, bool bAllowInheritance)
+	void LuaClass<T>::Register(const char* className, bool bAllowInheritance)
 	{
         Register(className, bAllowInheritance, T::RegisterStaticsAndMethods,
                  cast_from<void(*)(T*)>::template reinterpret__cast<void(*)(void*)>(T::RegisterVariables));
 	}
     
     template<typename T>
-    void LuaClass<T>::Register(const std::string& className, bool bAllowInheritance, void(*fn_static_reg)(void), void(*fn_inst_reg)(void*))
+    void LuaClass<T>::Register(const char* className, bool bAllowInheritance, void(*fn_static_reg)(void), void(*fn_inst_reg)(void*))
     {
         s_ClassName = className;
         s_fn_inst_reg = reinterpret_cast<void(*)(T*)>(fn_inst_reg);
@@ -98,7 +98,7 @@ namespace LuaLink
         LuaVariable::Commit(L);
         
         //Set table name (pops table)
-        lua_setglobal(L, s_ClassName.c_str());
+        lua_setglobal(L, s_ClassName);
     }
     
 	
@@ -133,7 +133,7 @@ namespace LuaLink
 		LuaVariable::Commit(L,-3);
 
 		//Set the class table as metatable for this object
-		lua_getglobal(L, s_ClassName.c_str());
+		lua_getglobal(L, s_ClassName);
 		lua_setmetatable(L, -2);
 	
 		return 1; //Return 1 value, our new table
@@ -164,9 +164,9 @@ namespace LuaLink
 		T** ppObj = static_cast<T**>(lua_touserdata(L, -1));
 		
 		if(ppObj)
-			lua_pushfstring(L, "%s (%p)", s_ClassName.c_str(), (void*)*ppObj);
+			lua_pushfstring(L, "%s (%p)", s_ClassName, (void*)*ppObj);
 		else
-			lua_pushfstring(L,"Empty %s object", s_ClassName.c_str());
+			lua_pushfstring(L,"Empty %s object", s_ClassName);
 		
 		return 1; //Return 1 string
 	}
@@ -193,7 +193,7 @@ namespace LuaLink
 		lua_settable(L,-3);
 
 		//Set our class as metatable for the new object
-		lua_getglobal(L,s_ClassName.c_str());
+		lua_getglobal(L,s_ClassName);
 		lua_setmetatable(L,-2);
 
 		return 1;

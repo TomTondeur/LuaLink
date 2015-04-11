@@ -18,40 +18,41 @@
 namespace LuaLink
 {
 	template<typename ClassT>
-	std::map<std::string, std::vector<LuaFunction::Unsafe_LuaFunc> > LuaStaticMethod<ClassT>::s_LuaFunctionMap;
-
-	template<typename ClassT>
 	int(*LuaStaticMethod<ClassT>::s_OverloadedConstructorWrapper)(lua_State*, detail::WrapperDoubleArg, void*, detail::ArgErrorCbType onArgError) = nullptr;
-
-	template<typename ClassT>
-	template<typename FunctionType>
-	void LuaStaticMethod<ClassT>::Register(FunctionType pFunc, const std::string& name){
-		Register_Impl(pFunc, name);
-	}
+    
+    template<typename ClassT>
+    std::map<const char*, std::vector<detail::LuaFunction::Unsafe_LuaFunc>, detail::CStrCmp > LuaStaticMethod<ClassT>::s_LuaFunctionMap;
 
 	template<typename ClassT>
 	template<typename _RetType, typename... _ArgTypes>
-	void LuaStaticMethod<ClassT>::Register_Impl(_RetType(*pFunc)(_ArgTypes...), const std::string& name)
+	void LuaStaticMethod<ClassT>::Register(_RetType(*pFunc)(_ArgTypes...), const char* name)
 	{
 		//Get iterator that points to the lookup table associated with 'name'
 		auto it = s_LuaFunctionMap.find(name);
 		if( it == s_LuaFunctionMap.end() )
-			it = s_LuaFunctionMap.insert(make_pair(name, std::vector<LuaFunction::Unsafe_LuaFunc>() ) ).first;
+            it = s_LuaFunctionMap.insert(make_pair(name, std::vector<detail::LuaFunction::Unsafe_LuaFunc>() ) ).first;
 	
 		//Add wrapper to lookup table
-		it->second.push_back(LuaFunction::Unsafe_LuaFunc(
-                                                         detail::FunctionWrapper<_RetType, _ArgTypes...>::execute,
+        it->second.push_back(detail::LuaFunction::Unsafe_LuaFunc(detail::FunctionWrapper<_RetType, _ArgTypes...>::execute,
                                                          detail::FunctionWrapper<_RetType, _ArgTypes...>::execute,
                                                          reinterpret_cast<void*>(pFunc)));
 	}
+    
+    namespace detail {
+        namespace LuaFunction {
+            extern std::vector<Unsafe_LuaFunc>& LuaFunctionTable();
+        }
+    }
 	
 	template<typename ClassT>
 	void LuaStaticMethod<ClassT>::Commit(lua_State* pLuaState, int metatable)
-	{
+    {
+        using namespace detail::LuaFunction;
+        
 		for(auto& elem : s_LuaFunctionMap){
 			//No overloading
 			if(elem.second.size() == 1){
-				lua_pushstring(pLuaState, elem.first.c_str() ); //Push function name
+				lua_pushstring(pLuaState, elem.first ); //Push function name
 
 				lua_pushlightuserdata(pLuaState, elem.second[0].pFunc); //Push callback
 				lua_pushcclosure(pLuaState, elem.second[0].pWrapperSingle, 1); //Push wrapper
@@ -63,12 +64,12 @@ namespace LuaLink
 			//This function needs to be overloaded =>
 
 			//Move functions to lookup table
-			size_t startIdx = LuaFunction::s_LuaFunctionTable.size();
+			size_t startIdx = LuaFunctionTable().size();
 			size_t endIdx = startIdx + elem.second.size();
 
-			std::move(elem.second.begin(), elem.second.end(), std::insert_iterator<std::vector<LuaFunction::Unsafe_LuaFunc>>(LuaFunction::s_LuaFunctionTable, LuaFunction::s_LuaFunctionTable.end()));
+            std::move(elem.second.begin(), elem.second.end(), std::insert_iterator<std::vector<Unsafe_LuaFunc>>(LuaFunctionTable(), LuaFunctionTable().end()));
 
-			lua_pushstring(pLuaState, elem.first.c_str()); //Push function name
+			lua_pushstring(pLuaState, elem.first); //Push function name
 		
 			//Push start and end indices of functions in lookup table (endIdx is one past last function, like .end() iterators)
 			lua_pushinteger(pLuaState, startIdx);
@@ -83,7 +84,9 @@ namespace LuaLink
 
 	template<typename ClassT>
 	void LuaStaticMethod<ClassT>::CommitConstructors(lua_State* pLuaState, int metatable, lua_CFunction ctorWrapper, int(*overloadedCtorWrapper)(lua_State*, detail::WrapperDoubleArg, void*, detail::ArgErrorCbType onArgError))
-	{
+    {
+        using detail::LuaFunction::LuaFunctionTable;
+        
 		s_OverloadedConstructorWrapper = overloadedCtorWrapper;
 
 		auto it = s_LuaFunctionMap.find("new");
@@ -107,10 +110,10 @@ namespace LuaLink
 		//This function needs to be overloaded =>
 
 		//Move functions to lookup table
-		size_t startIdx = LuaFunction::s_LuaFunctionTable.size();
+		size_t startIdx = LuaFunctionTable().size();
 		size_t endIdx = startIdx + it->second.size();
 
-		std::move(it->second.begin(), it->second.end(), std::insert_iterator<std::vector<LuaFunction::Unsafe_LuaFunc>>(LuaFunction::s_LuaFunctionTable, LuaFunction::s_LuaFunctionTable.end()));
+        std::move(it->second.begin(), it->second.end(), std::insert_iterator<std::vector<detail::LuaFunction::Unsafe_LuaFunc>>(LuaFunctionTable(), LuaFunctionTable().end()));
 
 		lua_pushstring(pLuaState, "new"); //Push function name
 		
@@ -128,13 +131,15 @@ namespace LuaLink
 	template<typename ClassT>
 	int LuaStaticMethod<ClassT>::OverloadedCTorDispatch(lua_State* L)
 	{
+        using detail::LuaFunction::LuaFunctionTable;
+        
 		//Get locations of valid constructors in our lookup table
 		auto startIdx = lua_tointeger( L, lua_upvalueindex(1) );
 		auto endIdx =	lua_tointeger( L, lua_upvalueindex(2) );
 
 		//Try constructors until we find one that fits (in case of failure, they will return before allocating any memory)
 		for(auto i = startIdx; i < endIdx; ++i){
-			int ret = s_OverloadedConstructorWrapper(L, LuaFunction::s_LuaFunctionTable[i].pWrapper, LuaFunction::s_LuaFunctionTable[i].pFunc, LuaFunction::OverloadedErrorHandling);
+			int ret = s_OverloadedConstructorWrapper(L, LuaFunctionTable()[i].pWrapper, LuaFunctionTable()[i].pFunc, LuaFunction::OverloadedErrorHandling);
 		
 			if(ret < 0)
 				continue;

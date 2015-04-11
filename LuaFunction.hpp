@@ -18,6 +18,7 @@
 #pragma once
 
 #include <lua.hpp>
+#include "TemplateUtil.h"
 #include <map>
 #include <vector>
 #include <string>
@@ -26,14 +27,14 @@ namespace LuaLink
 {
 	template<typename T> class LuaStaticMethod;
 	template<typename T> class LuaMethod;
-	template<typename T> class	LuaClass;
+	template<typename T> class LuaClass;
 
 	class LuaFunction
 	{
     public:
-		template<typename FunctionType>
-		// // Add a C++ global function to the Lua environment
-		static void Register(FunctionType pFunc, const std::string& name);
+        template<typename _RetType, typename... _ArgTypes>
+        // // Add a C++ member function to the appropriate lookup table
+        static void Register(_RetType(*pFunc)(_ArgTypes...), const char* name);
         
         static int DefaultErrorHandling(lua_State* L, int narg);
 		
@@ -42,21 +43,6 @@ namespace LuaLink
 		friend class LuaScript; //LuaScript needs access to Commit, rather befriend LuaScript than expose Commit to everything
 		template<typename T> friend class LuaClass;
 		template<typename T> friend class LuaMethod;
-	
-		//Struct form of wrapper/callbacks, necessary to keep a lookup table of all wrappers/callbacks
-		struct Unsafe_LuaFunc;
-	
-		//Contains all registered global functions, is flushed after functions are pushed to Lua environment
-		static std::map<std::string, std::vector<Unsafe_LuaFunc> > s_LuaFunctionMap;
-	
-		//* Contains all registered functions & static member functions
-		//* Is filled when functions are pushed to Lua environment
-		//* Used to retrieve callbacks on Lua function calls
-		static std::vector<Unsafe_LuaFunc> s_LuaFunctionTable;
-
-		template<typename _RetType, typename... _ArgTypes>
-		// // Add a C++ member function to the appropriate lookup table
-		static void Register_Impl(_RetType(*pFunc)(_ArgTypes...), const std::string& name);
 	
 		// // Pushes all registered member functions to the Lua environment
 		static void Commit(lua_State* pLuaState);
@@ -79,7 +65,6 @@ namespace LuaLink
 	};
     
     namespace detail {
-        typedef int(*ArgErrorCbType)(lua_State*, int);
         
         typedef int(*WrapperDoubleArg)(lua_State*, void*, ArgErrorCbType);
         typedef int(*WrapperSingleArg)(lua_State*);

@@ -17,6 +17,8 @@
 
 #pragma once
 
+#include "TemplateUtil.h"
+
 namespace LuaLink
 {
     template<typename T> class LuaClass;
@@ -30,10 +32,10 @@ namespace LuaLink
 	class LuaMethod
 	{
     public:
-		template<typename MemberFunctionType>
-		// // Add a C++ member function to the Lua environment
-		static void Register(MemberFunctionType pFunc, const std::string& name);
-
+		template<typename _RetType, typename... _ArgTypes>
+        // // Add a C++ member function to the appropriate lookup table
+        static void Register(_RetType(ClassT::*pFunc)(_ArgTypes...), const char* name);
+        
 	private:
         template<typename T, typename _RetType, typename... _ArgTypes>
         friend class detail::MethodWrapper;
@@ -47,16 +49,12 @@ namespace LuaLink
 		struct Unsafe_MethodWrapper;
 	
 		//Contains all registered member functions, is flushed after functions are pushed to Lua environment
-		static std::map<std::string, std::vector<Unsafe_MethodWrapper> > s_LuaFunctionMap;
+		static std::map<const char*, std::vector<Unsafe_MethodWrapper>, detail::CStrCmp > s_LuaFunctionMap;
 
 		//* Contains all registered member functions
 		//* Is filled when functions are pushed to Lua environment
 		//* Used to retrieve callbacks on Lua function calls
 		static std::vector<Unsafe_MethodWrapper> s_LuaFunctionTable;
-	
-		template<typename _RetType, typename... _ArgTypes>
-		// // Add a C++ member function to the appropriate lookup table
-		static void Register_Impl(_RetType(ClassT::*pFunc)(_ArgTypes...), const std::string& name);
 	
 		// // Pushes all registered member functions to the Lua environment
 		static void Commit(lua_State* pLuaState, int tablePosOnStack);

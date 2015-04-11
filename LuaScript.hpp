@@ -18,8 +18,6 @@
 #pragma once
 
 #include <lua.hpp>
-#include <functional>
-#include <memory>
 #include <string>
 
 #include <map>
@@ -37,13 +35,11 @@ namespace LuaLink
 {
 	template<typename T>class LuaClass;
 
-	class LuaScript
+	class LuaScript final
 	{
 	public:
-		//Constructor & destructor
-
-		LuaScript(const ::std::string& filename);
-		virtual ~LuaScript(void);
+		LuaScript(const char* filename);
+        ~LuaScript(void);
 
 		//Methods
 
@@ -72,7 +68,7 @@ namespace LuaLink
 	
 		//Datamembers
 	
-		::std::string m_Filename;
+		const char* m_Filename;
 		void(*InitializeEnvironment)(void); //Function where all needed variables/functions/classes are registeredd to the lua_State
 
 		static ::std::unique_ptr<lua_State> s_pLuaState;

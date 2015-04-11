@@ -41,10 +41,10 @@ namespace LuaLink
 	struct LuaScript::Call
 	{
 		template<typename... _ArgTypes>
-		static _RetType LuaFunction(const std::string& functionName, _ArgTypes... arguments)
+		static _RetType LuaFunction(const char* functionName, _ArgTypes... arguments)
 		{
 			//Look for global function with the provided name
-			lua_getglobal( LUA_STATE, functionName.c_str() );
+			lua_getglobal( LUA_STATE, functionName );
 			if( lua_type(LUA_STATE, lua_gettop(LUA_STATE)) == LUA_TNIL ){
 				lua_settop (LUA_STATE, 0);
 				throw LuaCallException( ("Global not found: " + std::string(functionName) ).c_str() );
@@ -70,17 +70,17 @@ namespace LuaLink
 		}
 	
 		template<typename... _ArgTypes>
-		static _RetType LuaStaticMethod(const std::string& tableName, const std::string& functionName, _ArgTypes... arguments)
+		static _RetType LuaStaticMethod(const char* tableName, const char* functionName, _ArgTypes... arguments)
 		{
 			//Look for global table with the provided name
-			lua_getglobal( LUA_STATE, tableName.c_str() );
+			lua_getglobal( LUA_STATE, tableName );
 			if( lua_type(LUA_STATE, lua_gettop(LUA_STATE)) == LUA_TNIL ){
 				lua_settop (LUA_STATE, 0);
 				throw LuaCallException( ("Global not found: " + std::string(tableName) ).c_str() );
 			}
 
 			//Look for function in that table
-			lua_getfield(LUA_STATE, -1, functionName.c_str() );
+			lua_getfield(LUA_STATE, -1, functionName );
 			if(!lua_isfunction(LUA_STATE, -1)){
 				lua_settop (LUA_STATE, 0);
 				throw LuaCallException( (std::string(functionName) + " is not a function in " + tableName).c_str() );
@@ -110,10 +110,10 @@ namespace LuaLink
 	struct LuaScript::Call<void>
 	{
 		template<typename... _ArgTypes>
-		static void LuaFunction(const std::string& functionName, _ArgTypes... arguments)
+		static void LuaFunction(const char* functionName, _ArgTypes... arguments)
 		{
 			//Look for global function with the provided name
-			lua_getglobal( LUA_STATE, functionName.c_str() );
+			lua_getglobal( LUA_STATE, functionName );
 			if( lua_type(LUA_STATE, lua_gettop(LUA_STATE)) == LUA_TNIL ){
 				lua_settop (LUA_STATE, 0);
 				throw LuaCallException( ("Global not found: " + std::string(functionName) ).c_str() );
@@ -128,17 +128,17 @@ namespace LuaLink
 		}
 	
 		template<typename... _ArgTypes>
-		static void LuaStaticMethod(const std::string& tableName, const std::string& functionName, _ArgTypes... arguments)
+		static void LuaStaticMethod(const char* tableName, const char* functionName, _ArgTypes... arguments)
 		{
 			//Look for global table with the provided name
-			lua_getglobal( LUA_STATE, tableName.c_str() );
+			lua_getglobal( LUA_STATE, tableName );
 			if( lua_type(LUA_STATE, lua_gettop(LUA_STATE)) == LUA_TNIL ){
 				lua_settop (LUA_STATE, 0);
 				throw LuaCallException( ("Global not found: " + std::string(tableName) ).c_str() );
 			}
 		
 			//Look for function in that table
-			lua_getfield(LUA_STATE, -1, functionName.c_str() );
+			lua_getfield(LUA_STATE, -1, functionName );
 			if(!lua_isfunction(LUA_STATE, -1)){
 				lua_settop (LUA_STATE, 0);
 				throw LuaCallException( (std::string(functionName) + " is not a function in " + tableName).c_str() );
@@ -171,7 +171,7 @@ namespace LuaLink
     
     //Constructor & destructor
     
-    LuaScript::LuaScript(const std::string& filename) : m_Filename(filename), InitializeEnvironment(nullptr) {}
+    LuaScript::LuaScript(const char* filename) : m_Filename(filename), InitializeEnvironment(nullptr) {}
     LuaScript::~LuaScript(void) {}
     
     //Methods
@@ -194,7 +194,7 @@ namespace LuaLink
             luaL_openlibs(LUA_STATE);
         
         // Load a Lua script chunk without executing it
-        switch(luaL_loadfile(s_pLuaState.get(), m_Filename.c_str() ))
+        switch(luaL_loadfile(s_pLuaState.get(), m_Filename ))
         {
             case 0:
                 break;
@@ -204,7 +204,7 @@ namespace LuaLink
                 throw LuaLoadException(lua_tostring(LUA_STATE, -1));
                 break;
             default:
-                throw LuaLoadException(("An unknown error has occured while loading file " + m_Filename).c_str());
+                throw LuaLoadException(("An unknown error has occured while loading file " + std::string(m_Filename)).c_str());
         }
     }
     
@@ -235,7 +235,7 @@ namespace LuaLink
                 throw LuaCallException(lua_tostring(LUA_STATE, -1));
                 break;
             default:
-                throw LuaCallException(("An unknown error has occured while executing file " + m_Filename).c_str());
+                throw LuaCallException(("An unknown error has occured while executing file " + std::string(m_Filename)).c_str());
         }
     }
     

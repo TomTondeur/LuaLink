@@ -29,24 +29,20 @@ namespace LuaLink
 	class LuaStaticMethod
 	{
     public:
-		template<typename FunctionType>
-		// //Registers a static method of class ClassT to use in Lua
-		static void Register(FunctionType pFunc, const std::string& name);
-
+        template<typename _RetType, typename... _ArgTypes>
+        // //Registers a static method of class ClassT to use in Lua
+        static void Register(_RetType(*pFunc)(_ArgTypes...), const char* name);
+        
 	private:
 		//LuaClass and LuaMethod need more 'intimate access than we want to expose to the end user
 		friend class LuaClass<ClassT>;	
 		friend class LuaMethod<ClassT>;
 		
 		//Contains all registered static methods for class ClassT, is flushed after functions are pushed to Lua environment
-		static std::map<std::string, std::vector<LuaFunction::Unsafe_LuaFunc> > s_LuaFunctionMap;
+		static std::map<const char*, std::vector<detail::LuaFunction::Unsafe_LuaFunc>, detail::CStrCmp > s_LuaFunctionMap;
 	
 		//Will be called from OverloadedCTorDispatch when someone calls an overloaded constructor from Lua
 		static int(*s_OverloadedConstructorWrapper)(lua_State*, detail::WrapperDoubleArg, void*, detail::ArgErrorCbType onArgError);
-	
-		template<typename _RetType, typename... _ArgTypes>
-		// Register implementation
-		static void Register_Impl(_RetType(*pFunc)(_ArgTypes...), const std::string& name);
 	
 		//Pushes all registered static methods to the provided lua_State*
 		static void Commit(lua_State* pLuaState, int metatable);

@@ -16,57 +16,80 @@
 // along with LuaLink.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "LuaStack.hpp"
-#include "TemplateUtil.h"
 
 namespace LuaLink
 {
-	template<typename FunctionType>
-	// // Add a C++ global function to the Lua environment
-	void LuaFunction::Register(FunctionType pFunc, const std::string& name)
-	{
-		Register_Impl(pFunc, name);
-	}
-		
+    namespace detail {
+        namespace LuaFunction {
+            //Struct form of wrapper/callbacks, necessary to keep a lookup table of all wrappers/callbacks
+            struct Unsafe_LuaFunc{
+                Unsafe_LuaFunc(WrapperDoubleArg w1, WrapperSingleArg w2, void* cb) : pWrapper(w1), pWrapperSingle(w2), pFunc(cb){}
+                
+                WrapperDoubleArg pWrapper; //Used for calls to overloaded member functions
+                WrapperSingleArg pWrapperSingle; //Used for calls to non-overloaded member functions
+                void* pFunc; //Serves as callback, discards type, wrappers restore type
+            };
+            
+            extern void Register_Impl(Unsafe_LuaFunc&&,const char*);
+        }
+    }
+    
 	template<typename _RetType, typename... _ArgTypes>
 	// // Add a C++ member function to the appropriate lookup table
-	void LuaFunction::Register_Impl(_RetType(*pFunc)(_ArgTypes...), const std::string& name)
-	{
-		auto it = s_LuaFunctionMap.find(name);
-		if( it == s_LuaFunctionMap.end() )
-			it = s_LuaFunctionMap.insert(make_pair(name, std::vector<Unsafe_LuaFunc>() ) ).first;
-        it->second.push_back(Unsafe_LuaFunc(
-                                            detail::FunctionWrapper<_RetType, _ArgTypes...>::execute,
-                                            detail::FunctionWrapper<_RetType, _ArgTypes...>::execute,
-                                            reinterpret_cast<void*>(pFunc)));
+	void LuaFunction::Register(_RetType(*pFunc)(_ArgTypes...), const char* name)
+    {
+        using namespace detail;
+        using namespace detail::LuaFunction;
+        detail::LuaFunction::Register_Impl(Unsafe_LuaFunc(
+                                     FunctionWrapper<_RetType, _ArgTypes...>::execute,
+                                     FunctionWrapper<_RetType, _ArgTypes...>::execute,
+                                     reinterpret_cast<void*>(pFunc)), name);
 	}
+}
 
-	//Struct form of wrapper/callbacks, necessary to keep a lookup table of all wrappers/callbacks
-	struct LuaFunction::Unsafe_LuaFunc{
-        Unsafe_LuaFunc(detail::WrapperDoubleArg w1, detail::WrapperSingleArg w2, void* cb) : pWrapper(w1), pWrapperSingle(w2), pFunc(cb){}
-
-        detail::WrapperDoubleArg pWrapper; //Used for calls to overloaded member functions
-		detail::WrapperSingleArg pWrapperSingle; //Used for calls to non-overloaded member functions
-		void* pFunc; //Serves as callback, discards type, wrappers restore type
-	};
+namespace LuaLink {
     
-#ifdef LUALINK_DEFINE
+    #ifdef LUALINK_DEFINE
+    namespace detail {
+        namespace LuaFunction {
+            std::map<const char*, std::vector<Unsafe_LuaFunc>, CStrCmp>& LuaFunctionMap() {
+                static std::map<const char*, std::vector<Unsafe_LuaFunc>, CStrCmp> s;
+                return s;
+            }
+            
+            std::vector<Unsafe_LuaFunc>& LuaFunctionTable() {
+                static std::vector<Unsafe_LuaFunc> s;
+                return s;
+            }
+            
+            void Register_Impl(Unsafe_LuaFunc&& func, const char* name) {
+                    auto it = LuaFunctionMap().find(name);
+                    if( it == LuaFunctionMap().end() )
+                        it = LuaFunctionMap().insert(make_pair(name, std::vector<Unsafe_LuaFunc>() ) ).first;
+                    it->second.push_back(func);
+            }
+        }
+    }
+    
     // // Pushes all registered functions to the Lua environment
     void LuaFunction::Commit(lua_State* pLuaState)
     {
-        for(auto& elem : s_LuaFunctionMap){
+        using namespace detail::LuaFunction;
+        
+        for(auto& elem : LuaFunctionMap()) {
             //No overloading
             if(elem.second.size() == 1){
                 lua_pushlightuserdata(pLuaState, elem.second[0].pFunc);
                 lua_pushcclosure(pLuaState, elem.second[0].pWrapperSingle, 1);
-                lua_setglobal(pLuaState, elem.first.c_str() );
+                lua_setglobal(pLuaState, elem.first );
                 continue;
             }
             
             //Copy function objects to table
-            size_t startIdx = s_LuaFunctionTable.size();
+            size_t startIdx = LuaFunctionTable().size();
             size_t endIdx = startIdx + elem.second.size();
             
-            std::move(elem.second.begin(), elem.second.end(), std::insert_iterator<std::vector<Unsafe_LuaFunc>>(s_LuaFunctionTable, s_LuaFunctionTable.end()));
+            std::move(elem.second.begin(), elem.second.end(), std::insert_iterator<std::vector<Unsafe_LuaFunc>>(LuaFunctionTable(), LuaFunctionTable().end()));
             
             //Push start and end indices
             lua_pushinteger(pLuaState, (lua_Integer)startIdx);
@@ -74,26 +97,28 @@ namespace LuaLink
             
             //Push closure
             lua_pushcclosure(pLuaState, LuaFunctionDispatch, 2);
-            lua_setglobal(pLuaState, elem.first.c_str());
+            lua_setglobal(pLuaState, elem.first);
         }
-        s_LuaFunctionMap.clear();
+        LuaFunctionMap().clear();
     }
     
     // // Throws out all references to functions that are left over from previous commits
     void LuaFunction::Release(void)
     {
-        if(!s_LuaFunctionTable.empty())
-            s_LuaFunctionTable.clear();
+        using namespace detail::LuaFunction;
+        if(!LuaFunctionTable().empty())
+            LuaFunctionTable().clear();
     }
     
     // Tries out all overloads until it finds an overload that matches the arguments used in the Lua call
     int LuaFunction::LuaFunctionDispatch(lua_State* L)
     {
+        using namespace detail::LuaFunction;
         auto startIdx = static_cast<lua_Unsigned>( lua_tointeger( L, lua_upvalueindex(1) ) );
         auto endIdx =	static_cast<lua_Unsigned>( lua_tointeger( L, lua_upvalueindex(2) ) );
         
         for(auto i = startIdx; i < endIdx; ++i){
-            int ret = s_LuaFunctionTable[i].pWrapper(L, s_LuaFunctionTable[i].pFunc, OverloadedErrorHandling);
+            int ret = LuaFunctionTable()[i].pWrapper(L, LuaFunctionTable()[i].pFunc, OverloadedErrorHandling);
             if(ret < 0)
                 continue;
             
@@ -104,14 +129,11 @@ namespace LuaLink
     
     int LuaFunction::DefaultErrorHandling(lua_State* L, int narg)	{ return narg == 0 ? luaL_error(L, "Bad # of arguments") : luaL_argerror(L, narg,""); }
     int LuaFunction::OverloadedErrorHandling(lua_State* L, int narg){ return -1; }
-    
-    std::map<std::string, std::vector<LuaFunction::Unsafe_LuaFunc> > LuaFunction::s_LuaFunctionMap;
-    std::vector<LuaFunction::Unsafe_LuaFunc> LuaFunction::s_LuaFunctionTable;
 #endif //LUALINK_DEFINE
 
 	// CALLBACK WRAPPERS
 
-	#define EXECUTE_V2	static int execute(lua_State* pLuaState){return execute(pLuaState, lua_touserdata( pLuaState, lua_upvalueindex(1) ), LuaFunction::DefaultErrorHandling);}
+	#define EXECUTE_V2	static int execute(lua_State* pLuaState){return execute(pLuaState, lua_touserdata( pLuaState, lua_upvalueindex(1) ), ::LuaLink::LuaFunction::DefaultErrorHandling);}
 
     namespace detail {
         //functionwrapper

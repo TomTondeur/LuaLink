@@ -23,13 +23,6 @@
 namespace LuaLink
 {
 	template<typename ClassT>
-	template<typename MemberFunctionT>
-	// // Add a C++ member function to the Lua environment
-	void LuaMethod<ClassT>::Register(MemberFunctionT pFunc, const std::string& name){
-		Register_Impl(pFunc, name);
-	}
-	
-	template<typename ClassT>
 	//Struct form of wrapper/callbacks, necessary to keep a lookup table of all wrappers/callbacks
 	struct LuaMethod<ClassT>::Unsafe_MethodWrapper{
 		Unsafe_MethodWrapper(WrapperDoubleArg w1, WrapperSingleArg w2, Unsafe_MethodType cb) : pWrapper(w1), pWrapperSingle(w2), pFunc(cb){}
@@ -42,7 +35,7 @@ namespace LuaLink
 	template<typename ClassT>
 	template<typename _RetType, typename... _ArgTypes>
 	// // Add a C++ member function to the appropriate lookup table
-	void LuaMethod<ClassT>::Register_Impl(_RetType(ClassT::*pFunc)(_ArgTypes...), const std::string& name)
+	void LuaMethod<ClassT>::Register(_RetType(ClassT::*pFunc)(_ArgTypes...), const char* name)
 	{
 		//Get iterator that points to the lookup table associated with 'name'
 		auto it = s_LuaFunctionMap.find(name);
@@ -69,7 +62,7 @@ namespace LuaLink
 			if(elem.second.size() == 1){
 				s_LuaFunctionTable.push_back(elem.second[0]); //Add function to the lookup table
 
-				lua_pushstring(pLuaState, elem.first.c_str() ); //Push function name
+				lua_pushstring(pLuaState, elem.first ); //Push function name
 
 				//Push index of function in lookup table & wrapper as closure
 				lua_pushinteger(pLuaState, s_LuaFunctionTable.size() - 1);
@@ -87,7 +80,7 @@ namespace LuaLink
 
 			std::move(elem.second.begin(), elem.second.end(), std::insert_iterator<std::vector<Unsafe_MethodWrapper>>(s_LuaFunctionTable, s_LuaFunctionTable.end()));
 		
-			lua_pushstring(pLuaState, elem.first.c_str()); //Push function name
+			lua_pushstring(pLuaState, elem.first); //Push function name
 
 			//Push start and end indices of functions in lookup table (endIdx is one past last function, like .end() iterators)
 			lua_pushinteger(pLuaState, startIdx);
@@ -166,7 +159,7 @@ namespace LuaLink
 
 	#define EXECUTE_V2 static int execute(lua_State* L){ \
 		LuaMethod<ClassT>::PushThisPointer(L);\
-		return execute(L, LuaMethod<ClassT>::s_LuaFunctionTable[static_cast<unsigned int>(lua_tointeger( L, lua_upvalueindex(1) ) )].pFunc, LuaFunction::DefaultErrorHandling);}
+		return execute(L, LuaMethod<ClassT>::s_LuaFunctionTable[static_cast<unsigned int>(lua_tointeger( L, lua_upvalueindex(1) ) )].pFunc, ::LuaLink::LuaFunction::DefaultErrorHandling);}
     
     namespace detail {
         
@@ -254,6 +247,6 @@ namespace LuaLink
     std::vector<typename LuaMethod<ClassT>::Unsafe_MethodWrapper> LuaMethod<ClassT>::s_LuaFunctionTable;
     
     template<typename ClassT>
-    std::map<std::string, std::vector<typename LuaMethod<ClassT>::Unsafe_MethodWrapper> > LuaMethod<ClassT>::s_LuaFunctionMap;
+    std::map<const char*, std::vector<typename LuaMethod<ClassT>::Unsafe_MethodWrapper>, detail::CStrCmp > LuaMethod<ClassT>::s_LuaFunctionMap;
     
 }

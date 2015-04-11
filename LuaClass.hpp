@@ -26,12 +26,12 @@ namespace LuaLink
 	{
 	  public:
         // // Registers Class T in the Lua environment
-        static void Register(const std::string& className, bool bAllowInheritance = true);
-        static void Register(const std::string& className, bool bAllowInheritance, void(*fn_static_reg)(void), void(*fn_inst_reg)(void*));
+        static void Register(const char* className, bool bAllowInheritance = true);
+        static void Register(const char* className, bool bAllowInheritance, void(*fn_static_reg)(void), void(*fn_inst_reg)(void*));
 	
 	private:
 		// // This is the name the class is registered with in Lua
-		static std::string s_ClassName;
+		static const char* s_ClassName;
         
         //This function will be used to register instances of this class in Lua
         static void(*s_fn_inst_reg)(T*);
