@@ -9,7 +9,7 @@
 #include <iostream>
 #include <list>
 #define LUALINK_DEFINE
-#include "LuaLink"
+#include "./../../LuaLink"
 
 using namespace std;
 using namespace LuaLink;

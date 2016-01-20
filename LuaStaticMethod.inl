@@ -134,8 +134,8 @@ namespace LuaLink
         using detail::LuaFunction::LuaFunctionTable;
         
 		//Get locations of valid constructors in our lookup table
-		auto startIdx = lua_tointeger( L, lua_upvalueindex(1) );
-		auto endIdx =	lua_tointeger( L, lua_upvalueindex(2) );
+		auto startIdx = static_cast<int>( lua_tointeger( L, lua_upvalueindex(1) ) );
+		auto endIdx =	static_cast<int>( lua_tointeger( L, lua_upvalueindex(2) ) );
 
 		//Try constructors until we find one that fits (in case of failure, they will return before allocating any memory)
 		for(auto i = startIdx; i < endIdx; ++i){

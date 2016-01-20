@@ -115,8 +115,8 @@ namespace LuaLink
 	int LuaMethod<ClassT>::OverloadDispatch(lua_State* L)
 	{
 		//Retrieve range in lookup table where overloads are located
-		auto startIdx = lua_tointeger( L, lua_upvalueindex(1) );
-		auto endIdx =	lua_tointeger( L, lua_upvalueindex(2) );
+		auto startIdx = static_cast<int>( lua_tointeger( L, lua_upvalueindex(1) ) );
+		auto endIdx =	static_cast<int>( lua_tointeger( L, lua_upvalueindex(2) ) );
 
 		PushThisPointer(L);
 

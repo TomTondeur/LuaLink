@@ -17,6 +17,8 @@
 
 #include "LuaStack.hpp"
 
+#include <iterator>
+
 namespace LuaLink
 {
     namespace detail {
@@ -114,11 +116,11 @@ namespace LuaLink {
     int LuaFunction::LuaFunctionDispatch(lua_State* L)
     {
         using namespace detail::LuaFunction;
-        auto startIdx = static_cast<lua_Unsigned>( lua_tointeger( L, lua_upvalueindex(1) ) );
-        auto endIdx =	static_cast<lua_Unsigned>( lua_tointeger( L, lua_upvalueindex(2) ) );
+        auto startIdx = static_cast<int>( lua_tointeger( L, lua_upvalueindex(1) ) );
+        auto endIdx =	static_cast<int>( lua_tointeger( L, lua_upvalueindex(2) ) );
         
         for(auto i = startIdx; i < endIdx; ++i){
-            int ret = LuaFunctionTable()[i].pWrapper(L, LuaFunctionTable()[i].pFunc, OverloadedErrorHandling);
+            auto ret = LuaFunctionTable()[i].pWrapper(L, LuaFunctionTable()[i].pFunc, OverloadedErrorHandling);
             if(ret < 0)
                 continue;
             

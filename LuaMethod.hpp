@@ -38,7 +38,7 @@ namespace LuaLink
         
 	private:
         template<typename T, typename _RetType, typename... _ArgTypes>
-        friend class detail::MethodWrapper;
+        friend struct detail::MethodWrapper;
 		friend class LuaClass<ClassT>; //LuaClass<ClassT> needs access to Commit, rather befriend LuaClass<ClassT> than expose Commit to everything
 	
 		typedef void(ClassT::*Unsafe_MethodType)();

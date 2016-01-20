@@ -10,17 +10,43 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="LuaAuto.hpp" />
+    <ClInclude Include="LuaClass.hpp" />
+    <ClInclude Include="LuaFunction.hpp" />
+    <ClInclude Include="LuaMethod.hpp" />
+    <ClInclude Include="LuaScript.hpp" />
+    <ClInclude Include="LuaStack.hpp" />
+    <ClInclude Include="LuaStaticMethod.hpp" />
+    <ClInclude Include="LuaVariable.hpp" />
+    <ClInclude Include="TemplateUtil.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LuaClass.inl" />
+    <None Include="LuaFunction.inl" />
+    <None Include="LuaLink" />
+    <None Include="LuaMethod.inl" />
+    <None Include="LuaScript.inl" />
+    <None Include="LuaStack.inl" />
+    <None Include="LuaStaticMethod.inl" />
+    <None Include="LuaVariable.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="LuaLinkTest\LuaLinkTest\main.cpp" />
+    <ClCompile Include="LuaLinkTest\LuaLinkTest\notmain.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C53A1957-C271-4D37-B5D7-E032014AEB14}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>LuaLink</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.10240.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120_CTP_Nov2012</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -40,8 +66,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>.\..\lua-5.2.1\include;$(IncludePath)</IncludePath>
-    <LibraryPath>.\..\lua-5.2.1;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Program Files %28x86%29\lua\include;$(MSBuildProjectDirectory);$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\lua\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>.\..\lua-5.2.1\include;$(IncludePath)</IncludePath>
@@ -60,7 +86,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>lua52.lib</AdditionalDependencies>
+      <AdditionalDependencies>lua.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -83,32 +109,6 @@
       <AdditionalDependencies>lua52.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="LuaClass\LuaClass.h" />
-    <ClInclude Include="luadbg.h" />
-    <ClInclude Include="LuaFunction\LuaFunction.h" />
-    <ClInclude Include="LuaLink" />
-    <ClInclude Include="LuaMethod\LuaMethod.h" />
-    <ClInclude Include="LuaScript\LuaScript.h" />
-    <ClInclude Include="LuaStack\LuaStack.h" />
-    <ClInclude Include="LuaStaticMethod\LuaStaticMethod.h" />
-    <ClInclude Include="LuaVariable\LuaVariable.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="LuaClass\LuaClass.inl" />
-    <None Include="LuaFunction\LuaFunction.inl" />
-    <None Include="LuaMethod\LuaMethod.inl" />
-    <None Include="LuaScript\LuaScript.inl" />
-    <None Include="LuaStack\LuaStack.inl" />
-    <None Include="LuaStaticMethod\LuaStaticMethod.inl" />
-    <None Include="LuaVariable\LuaVariable.inl" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="LuaFunction\LuaFunction.cpp" />
-    <ClCompile Include="LuaScript\LuaScript.cpp" />
-    <ClCompile Include="LuaStack\LuaStack.cpp" />
-    <ClCompile Include="LuaVariable\LuaVariable.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

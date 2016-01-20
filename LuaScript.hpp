@@ -22,6 +22,8 @@
 
 #include <map>
 
+#include <memory>
+
 template<>
 //Specify policy to release lua_State*
 struct std::default_delete<lua_State>{

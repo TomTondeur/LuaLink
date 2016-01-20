@@ -17,6 +17,8 @@
 
 #pragma once
 
+#include <iostream>
+
 namespace LuaLink {
     template<typename T>
     struct WeakLinkedList {
@@ -115,6 +117,8 @@ namespace LuaLink {
     };
 }
 
+#define ID(x) x
+
 #define GET_MACRO_2(_01, _02, NAME, ...) NAME
 #define GET_MACRO_3(_01, _02, _03, NAME, ...) NAME
 
@@ -128,39 +132,39 @@ typedef X type
 #define LUACLASS_1(CLASS) LUACLASS_2(CLASS,#CLASS)
 #define LUACLASS_2(CLASS,NAME) LUACLASS_3(CLASS,NAME,true)
 #define LUACLASS_3(CLASS,NAME,IS_INHERITANCE_ALLOWED) \
-WeakLinkedList<LuaLink::LuaAutoClass>::node CLASS##_LuaClass_WLLN( \
+WeakLinkedList<LuaLink::LuaAutoClass>::node CLASS##_LuaClass_WLLN { \
 LuaAutoClass(NAME, \
 CLASS::RegisterStaticsAndMethods, \
 CLASS::RegisterVariables, \
 LuaClass<CLASS>::Register, \
 IS_INHERITANCE_ALLOWED), \
-LuaAutoClass::AddNode(&CLASS##_LuaClass_WLLN));
+LuaAutoClass::AddNode(&CLASS##_LuaClass_WLLN) };
 
 //Lua nonstatic members
 #define LUAMEMBERS(CLASS) void CLASS::RegisterVariables(CLASS* self)
 #define LUAMEMBER_1(X) LUAMEMBER_2(X, #X)
 #define LUAMEMBER_2(X,NAME) LuaLink::LuaVariable::Register(self->X, NAME);
-#define LUAMEMBER(...) GET_MACRO_2(__VA_ARGS__, LUAMEMBER_2, LUAMEMBER_1)(__VA_ARGS__)
+#define LUAMEMBER(...) ID(GET_MACRO_2(__VA_ARGS__, LUAMEMBER_2, LUAMEMBER_1)(__VA_ARGS__))
 
 //Lua statics and methods
-#define LUASTATICMETHOD(...) GET_MACRO_2(__VA_ARGS__, LUASTATICMETHOD_2, LUASTATICMETHOD_1)(__VA_ARGS__)
+#define LUASTATICMETHOD(...) ID(GET_MACRO_2(__VA_ARGS__, LUASTATICMETHOD_2, LUASTATICMETHOD_1)(__VA_ARGS__))
 #define LUASTATICMETHOD_1(X) LUASTATICMETHOD_2(X, #X)
 #define LUASTATICMETHOD_2(X,NAME) LuaLink::LuaStaticMethod<type>::Register(X,NAME);
 
-#define LUAMETHOD(...) GET_MACRO_2(__VA_ARGS__, LUAMETHOD_2, LUAMETHOD_1)(__VA_ARGS__)
+#define LUAMETHOD(...) ID(GET_MACRO_2(__VA_ARGS__, LUAMETHOD_2, LUAMETHOD_1)(__VA_ARGS__))
 #define LUAMETHOD_1(X) LUAMETHOD_2(X, #X)
 #define LUAMETHOD_2(X,NAME) LuaLink::LuaMethod<type>::Register(&type::X,NAME);
 
-#define LUASTATIC(...) GET_MACRO_2(__VA_ARGS__, LUASTATIC_2, LUASTATIC_1)(__VA_ARGS__)
+#define LUASTATIC(...) ID(GET_MACRO_2(__VA_ARGS__, LUASTATIC_2, LUASTATIC_1)(__VA_ARGS__))
 #define LUASTATIC_1(X) LUASTATIC_2(X, #X)
 #define LUASTATIC_2(X,NAME) LuaLink::LuaVariable::Register(X,NAME);
 
 #define LUASTATICS(CLASS) void CLASS::RegisterStaticsAndMethods(void)
 
 //Lua global functions
-#define LUAFUNCTION(...) GET_MACRO_2(__VA_ARGS__, LUAFUNCTION_2, LUAFUNCTION_1)(__VA_ARGS__)
+#define LUAFUNCTION(...) ID(GET_MACRO_2(__VA_ARGS__, LUAFUNCTION_2, LUAFUNCTION_1)(__VA_ARGS__))
 #define LUAFUNCTION_1(FN) LUAFUNCTION_2(FN,#FN)
 #define LUAFUNCTION_2(FN,NAME) \
-WeakLinkedList<LuaLink::LuaAutoFunction>::node FN##_LuaFunction_WLLN( \
+WeakLinkedList<LuaLink::LuaAutoFunction>::node FN##_LuaFunction_WLLN ( \
 LuaAutoFunction(FN,NAME), \
-LuaAutoFunction::AddNode(&FN##_LuaFunction_WLLN));
+nullptr );

@@ -1,3 +1,9 @@
 **/.DS_STORE
 **/xcuserdata
 **/*.swp
+Debug
+Release
+.vs
+*.sdf
+*.opensdf
+*.vcxproj.user
