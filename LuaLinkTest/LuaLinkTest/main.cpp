@@ -34,10 +34,14 @@ int main()
         cout << endl << e.what() << endl;
     }
     
+#if WIN32
+	system("pause");
+#else
     cout << "Press any key to continue...";
     flush(cout);
     system("read");
-    
+#endif
+
     return 0;
 }
 
